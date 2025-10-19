@@ -1,50 +1,53 @@
 <?php
 /** Enqueue theme assets */
 add_action( 'wp_enqueue_scripts', function() {
-<<<<<<< HEAD
+    // 1) Hoved-stylesheet (style.css) – versjoneres med filemtime
     $style_path = get_template_directory() . '/style.css';
-    $style_uri  = get_stylesheet_uri();
-    $style_ver  = file_exists( $style_path ) ? filemtime( $style_path ) : null;
-=======
-    wp_enqueue_style( 'nvs-style', get_stylesheet_uri(), [], filemtime( get_template_directory() . '/style.css' ) );
-    $theme = wp_get_theme();
+    $style_ver  = file_exists( $style_path ) ? filemtime( $style_path ) : wp_get_theme()->get( 'Version' );
+    wp_enqueue_style( 'nvs-style', get_stylesheet_uri(), [], $style_ver );
 
-	wp_register_script(
-		'tvs-app',
-		get_theme_file_uri('assets/tvs-app.js'),
-		[ 'wp-element' ], // bruker React fra WP
-		$theme->get('Version'),
-		true
-	);
+    // 2) Registrer app-ressurser (JS/CSS) – lastes kun der vi trenger dem
+    $theme      = wp_get_theme();
+    $app_js_rel = 'assets/tvs-app.js';
+    $app_css_rel= 'assets/tvs-app.css';
+    $app_js_abs = get_template_directory() . '/' . $app_js_rel;
+    $app_css_abs= get_template_directory() . '/' . $app_css_rel;
 
-	// Dev/konfig inn i JS
-	wp_localize_script('tvs-app', 'TVS_SETTINGS', [
-		'env'      => ( defined('WP_DEBUG') && WP_DEBUG ) ? 'development' : 'production',
-		'restRoot' => get_rest_url(),
-		'version'  => $theme->get('Version'),
-		'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
-	]);
+    if ( file_exists( $app_js_abs ) ) {
+        // Registrer med korrekt avhengighet slik at React fra WP lastes (wp-element)
+        wp_register_script(
+            'tvs-app',
+            get_theme_file_uri( $app_js_rel ),
+            [ 'wp-element' ],
+            filemtime( $app_js_abs ),
+            true
+        );
 
-	wp_register_style(
-		'tvs-app-style',
-		get_theme_file_uri('assets/tvs-app.css'),
-		[],
-		$theme->get('Version')
-	);
->>>>>>> 0e10b98fd6e9583b3f2708a15c5c4f219f768602
+        // Dev/konfig inn i JS (gjør dette etter register, før enqueue)
+        wp_localize_script( 'tvs-app', 'TVS_SETTINGS', [
+            'env'      => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'development' : 'production',
+            'restRoot' => get_rest_url(),
+            'version'  => $theme->get( 'Version' ),
+            'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
+        ] );
+    }
 
-    wp_enqueue_style( 'nvs-style', $style_uri, array(), $style_ver );
+    if ( file_exists( $app_css_abs ) ) {
+        wp_register_style(
+            'tvs-app-style',
+            get_theme_file_uri( $app_css_rel ),
+            [],
+            filemtime( $app_css_abs )
+        );
+    }
 
-    $tvs_asset_path = get_template_directory() . '/assets/tvs-app.js';
-    $tvs_asset_uri  = get_theme_file_uri( '/assets/tvs-app.js' );
-    $tvs_version    = file_exists( $tvs_asset_path ) ? filemtime( $tvs_asset_path ) : null;
-
-    if ( file_exists( $tvs_asset_path ) ) {
-        wp_register_script( 'tvs-app', $tvs_asset_uri, array(), $tvs_version, true );
-
-        // Load tvs-app only on single tvs_route (ensure CPT slug matches)
-        if ( is_singular( 'tvs_route' ) ) {
+    // 3) Last app bare på single tvs_route
+    if ( is_singular( 'tvs_route' ) ) {
+        if ( wp_script_is( 'tvs-app', 'registered' ) ) {
             wp_enqueue_script( 'tvs-app' );
+        }
+        if ( wp_style_is( 'tvs-app-style', 'registered' ) ) {
+            wp_enqueue_style( 'tvs-app-style' );
         }
     }
 } );
