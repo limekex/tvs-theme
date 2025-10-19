@@ -1,7 +1,6 @@
 # Operating System files
 .DS_Store
 Thumbs.db
-README.md
 
 # IDE/Editor folders
 .idea/
@@ -43,4 +42,4 @@ wp-content/wp-cache-config.php
 # Unit tests / coverage reports
 coverage/
 phpunit.xml
-.phpunit.result.cache
+.phpunit.result.cacheplugins/
