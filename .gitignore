@@ -5,11 +5,13 @@ Thumbs.db
 # IDE/Editor folders
 .idea/
 .vscode/
+plugins/
+plugins/tvs-blocks/
 *.sublime-project
 *.sublime-workspace
 
 # Node modules and build assets
-g**/node_modules/
+**/node_modules/
 themes/norway-virtual-sport/node_modules/
 npm-debug.log
 themes/norway-virtual-sport/npm-debug.log
