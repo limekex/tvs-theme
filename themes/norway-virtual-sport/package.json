@@ -1,0 +1,15 @@
+{
+  "name": "norway-virtual-sport-theme",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:css": "wp-scripts lint-style",
+    "format": "prettier --write '**/*.{js,php,css,scss,json,md}'"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^28.0.0",
+    "prettier": "^2.8.0"
+  }
+}

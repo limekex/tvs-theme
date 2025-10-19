@@ -1,0 +1,43 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor folders
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules and build assets
+g**/node_modules/
+themes/norway-virtual-sport/node_modules/
+npm-debug.log
+themes/norway-virtual-sport/npm-debug.log
+yarn-debug.log
+themes/norway-virtual-sport/yarn-debug.log
+yarn-error.log
+themes/norway-virtual-sport/yarn-error.log
+
+# Composer dependencies
+vendor/
+themes/norway-virtual-sport/vendor/
+composer.lock
+themes/norway-virtual-sport/composer.lock
+
+# WordPress specific
+*.log
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/mu-plugins/
+wp-content/wp-cache-config.php
+
+# Unit tests / coverage reports
+coverage/
+phpunit.xml
+.phpunit.result.cache

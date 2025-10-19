@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "tvs/routes-grid",
+  "title": "Routes Grid",
+  "category": "widgets",
+  "icon": "grid-view",
+  "editorScript": "file:./src/index.js",
+  "style": "file:./style.css",
+  "attributes": {
+    "perPage": { "type": "number", "default": 9 }
+  }
+}
