@@ -4,6 +4,10 @@
 require get_template_directory() . '/inc/enqueue.php';
 require get_template_directory() . '/inc/rest.php';
 require get_template_directory() . '/inc/blocks.php';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0e10b98fd6e9583b3f2708a15c5c4f219f768602
 
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'wp-block-styles' );

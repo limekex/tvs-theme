@@ -1,5 +1,6 @@
 <?php
 /**
+<<<<<<< HEAD
  * Register block metadata for blocks in the /blocks directory.
  * Uses register_block_type_from_metadata when available (WP 5.5+).
  */
@@ -32,3 +33,13 @@ add_action( 'init', function() {
         }
     }
 } );
+=======
+ * Auto-register all blocks under /blocks
+ */
+add_action('init', function () {
+	$base = get_theme_file_path('blocks');
+	foreach (glob($base . '/*/block.json') as $json) {
+		register_block_type(dirname($json));
+	}
+});
+>>>>>>> 0e10b98fd6e9583b3f2708a15c5c4f219f768602
