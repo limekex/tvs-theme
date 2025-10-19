@@ -1,3 +1,4 @@
+**/node_modules/
 # Operating System files
 .DS_Store
 Thumbs.db
@@ -5,26 +6,19 @@ Thumbs.db
 # IDE/Editor folders
 .idea/
 .vscode/
-plugins/
-plugins/tvs-blocks/
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
 
 # Node modules and build assets
-**/node_modules/
-themes/norway-virtual-sport/node_modules/
+node_modules/
 npm-debug.log
-themes/norway-virtual-sport/npm-debug.log
 yarn-debug.log
-themes/norway-virtual-sport/yarn-debug.log
 yarn-error.log
-themes/norway-virtual-sport/yarn-error.log
 
 # Composer dependencies
 vendor/
-themes/norway-virtual-sport/vendor/
 composer.lock
-themes/norway-virtual-sport/composer.lock
 
 # WordPress specific
 *.log
@@ -42,4 +36,4 @@ wp-content/wp-cache-config.php
 # Unit tests / coverage reports
 coverage/
 phpunit.xml
-.phpunit.result.cacheplugins/
+.phpunit.result.cache
