@@ -12,10 +12,11 @@
     },
     "typography": {
       "fontSizes": [
-        { "name": "Small", "slug": "small", "size": 13 },
-        { "name": "Normal", "slug": "normal", "size": 16 },
-        { "name": "Large", "slug": "large", "size": 28 }
+        { "name": "Small", "slug": "small", "size": "13px" },
+        { "name": "Normal", "slug": "normal", "size": "16px" },
+        { "name": "Large", "slug": "large", "size": "28px" }
       ]
     }
-  }
+  },
+  "styles": {}
 }
