@@ -41,13 +41,41 @@ add_action( 'wp_enqueue_scripts', function() {
         );
     }
 
-    // 3) Last app bare på single tvs_route
-    if ( is_singular( 'tvs_route' ) ) {
-        if ( wp_script_is( 'tvs-app', 'registered' ) ) {
-            wp_enqueue_script( 'tvs-app' );
+    // 3) Enqueue strava-connect.js only on Strava Connected page (slug: connect-strava)
+    if ( is_page( 'connect-strava' ) ) {
+        $strava_js_rel = 'assets/strava-connect.js';
+        $strava_js_abs = get_template_directory() . '/' . $strava_js_rel;
+        $strava_btn_js_rel = 'assets/strava-button.js';
+        $strava_btn_js_abs = get_template_directory() . '/' . $strava_btn_js_rel;
+        
+        if ( file_exists( $strava_js_abs ) ) {
+            wp_register_script(
+                'strava-connect',
+                get_theme_file_uri( $strava_js_rel ),
+                [],
+                filemtime( $strava_js_abs ),
+                true
+            );
+            // Localize nonce, restRoot, and Strava client ID for JS
+            $strava_client_id = get_option( 'tvs_strava_client_id', '' );
+            wp_localize_script( 'strava-connect', 'TVS_SETTINGS', [
+                'restRoot' => get_rest_url(),
+                'nonce'    => wp_create_nonce( 'wp_rest' ),
+                'stravaClientId' => $strava_client_id,
+                'siteUrl' => home_url(),
+            ] );
+            wp_enqueue_script( 'strava-connect' );
         }
-        if ( wp_style_is( 'tvs-app-style', 'registered' ) ) {
-            wp_enqueue_style( 'tvs-app-style' );
+        
+        // Enqueue button builder script
+        if ( file_exists( $strava_btn_js_abs ) ) {
+            wp_enqueue_script(
+                'strava-button',
+                get_theme_file_uri( $strava_btn_js_rel ),
+                ['strava-connect'],
+                filemtime( $strava_btn_js_abs ),
+                true
+            );
         }
     }
 } );
