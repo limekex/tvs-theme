@@ -27,6 +27,7 @@ add_action( 'wp_enqueue_scripts', function() {
         wp_localize_script( 'tvs-app', 'TVS_SETTINGS', [
             'env'      => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'development' : 'production',
             'restRoot' => get_rest_url(),
+            'nonce'    => wp_create_nonce( 'wp_rest' ),
             'version'  => $theme->get( 'Version' ),
             'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
         ] );
@@ -39,6 +40,16 @@ add_action( 'wp_enqueue_scripts', function() {
             [],
             filemtime( $app_css_abs )
         );
+    }
+
+    // Enqueue app scripts/styles on pages that rely on TVS_SETTINGS (e.g., min-profil, my-activities)
+    if ( function_exists('is_page') && ( is_page( 'min-profil' ) || is_page( 'my-activities' ) ) ) {
+        if ( wp_script_is( 'tvs-app', 'registered' ) ) {
+            wp_enqueue_script( 'tvs-app' );
+        }
+        if ( wp_style_is( 'tvs-app-style', 'registered' ) ) {
+            wp_enqueue_style( 'tvs-app-style' );
+        }
     }
 
     // 3) Enqueue strava-connect.js only on Strava Connected page (slug: connect-strava)
