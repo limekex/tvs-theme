@@ -41,3 +41,28 @@
 }
 .tvs-dev__err { color: #ffb4b4; }
 .tvs-dev__actions { display: flex; gap: 8px; margin-top: 8px; }
+
+/* Progress Bar */
+.tvs-progress {
+	margin-top: 16px;
+	padding: 12px 0;
+}
+.tvs-progress__bar {
+	width: 100%;
+	height: 8px;
+	background: #e5e7eb;
+	border-radius: 4px;
+	overflow: hidden;
+	margin-bottom: 8px;
+}
+.tvs-progress__fill {
+	height: 100%;
+	background: linear-gradient(90deg, #1f6feb, #0969da);
+	transition: width 0.1s linear;
+	border-radius: 4px;
+}
+.tvs-progress__time {
+	font-size: 13px;
+	color: #57606a;
+	text-align: center;
+}

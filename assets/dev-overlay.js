@@ -22,7 +22,7 @@ function useFPS() {
 	return fps;
 }
 
-export default function DevOverlay({ routeId, lastStatus, lastError }) {
+export default function DevOverlay({ routeId, lastStatus, lastError, currentTime, duration }) {
 	const fps = useFPS();
 	const boxRef = useRef(null);
 	const [min, setMin] = useState(false);
@@ -58,6 +58,8 @@ export default function DevOverlay({ routeId, lastStatus, lastError }) {
 		};
 	}, [pos]);
 
+	const progress = duration > 0 ? ((currentTime / duration) * 100).toFixed(1) : '0.0';
+
 	const data = {
 		env: window.TVS_SETTINGS?.env,
 		version: window.TVS_SETTINGS?.version,
@@ -66,6 +68,9 @@ export default function DevOverlay({ routeId, lastStatus, lastError }) {
 		routeId,
 		lastStatus,
 		lastError: lastError ? String(lastError) : null,
+		currentTime: currentTime?.toFixed(1),
+		duration,
+		progress: progress + '%',
 		time: new Date().toISOString(),
 	};
 
@@ -95,6 +100,9 @@ export default function DevOverlay({ routeId, lastStatus, lastError }) {
 				{data.lastError && (
 					<div className="tvs-dev__row"><span>Error</span><code className="tvs-dev__err">{data.lastError}</code></div>
 				)}
+				<div className="tvs-dev__row"><span>Duration</span><code>{data.duration}s</code></div>
+				<div className="tvs-dev__row"><span>Current</span><code>{data.currentTime}s</code></div>
+				<div className="tvs-dev__row"><span>Progress</span><code>{data.progress}</code></div>
 				<div className="tvs-dev__row"><span>FPS</span><code>{fps}</code></div>
 				<div className="tvs-dev__actions">
 					<button onClick={copy} className="tvs-dev__btn">Copy debug</button>
