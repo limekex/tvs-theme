@@ -27,6 +27,8 @@ add_action( 'wp_enqueue_scripts', function() {
         wp_localize_script( 'tvs-app', 'TVS_SETTINGS', [
             'env'      => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'development' : 'production',
             'restRoot' => get_rest_url(),
+            // Add REST nonce so client can authenticate API calls when cookies fail
+            'nonce'    => wp_create_nonce( 'wp_rest' ),
             'version'  => $theme->get( 'Version' ),
             'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
         ] );
