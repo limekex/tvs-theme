@@ -327,10 +327,9 @@
       try {
         // Check if user is logged in
         if (!window.TVS_SETTINGS?.user) {
-          alert("You must be logged in to create an activity");
+          window.tvsFlash("You must be logged in to create an activity", "error");
           return;
         }
-        
         setIsPosting(true);
         setLastStatus("posting");
         const payload = {
@@ -351,21 +350,19 @@
           credentials: "same-origin",
           body: JSON.stringify(payload),
         });
-        
         if (!r.ok) {
           const res = await r.json();
           throw new Error(res.message || `HTTP ${r.status}: ${res.code || 'Unknown error'}`);
         }
-        
         const res = await r.json();
         log("Activity OK:", res);
-        alert("✓ Activity created! ID: " + res.id);
+        window.tvsFlash("Activity saved!", "success");
         setLastStatus("ok");
-        // Reload activities list
         await loadActivities();
+        window.dispatchEvent(new CustomEvent('tvs:activity-updated'));
       } catch (e) {
         err("Activity FAIL:", e);
-        alert("Failed to create activity: " + (e?.message || String(e)));
+        window.tvsFlash("Failed to create activity: " + (e?.message || String(e)), "error");
         setLastError(e?.message || String(e));
         setLastStatus("error");
       } finally {
@@ -378,7 +375,6 @@
         setUploadingId(activityId);
         setLastStatus("uploading");
         log("Uploading activity", activityId, "to Strava");
-        
         const r = await fetch(`/wp-json/tvs/v1/activities/${activityId}/strava`, {
           method: "POST",
           headers: {
@@ -387,22 +383,18 @@
           },
           credentials: "same-origin",
         });
-        
         const res = await r.json();
-        
         if (!r.ok) {
           throw new Error(res.message || "Upload failed");
         }
-        
         log("Strava upload OK:", res);
-        alert("✓ Uploaded to Strava!\n" + (res.strava_url || "Activity ID: " + res.strava_id));
+        window.tvsFlash("Activity synced to Strava!", "success");
         setLastStatus("ok");
-        
-        // Reload activities to show updated sync status
         await loadActivities();
+        window.dispatchEvent(new CustomEvent('tvs:activity-updated'));
       } catch (e) {
         err("Strava upload FAIL:", e);
-        alert("Failed to upload to Strava: " + (e?.message || String(e)));
+        window.tvsFlash("Failed to upload to Strava: " + (e?.message || String(e)), "error");
         setLastError(e?.message || String(e));
         setLastStatus("error");
       } finally {
