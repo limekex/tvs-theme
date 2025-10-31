@@ -1,0 +1,247 @@
+/* Strava Connect - Dark UI */
+:root {
+  --tvs-strava-orange: #FC4C02;
+  --tvs-strava-bg: #141414;
+  --tvs-strava-border: #1a1a1a;
+}
+
+.tvs-strava-connect {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tvs-strava-card {
+  background: var(--tvs-strava-bg);
+  border: 1px solid var(--tvs-strava-border);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+}
+
+.tvs-strava-icon {
+  margin: 0 auto 20px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(252, 76, 2, 0.1);
+  border-radius: 50%;
+}
+
+.tvs-strava-title {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #e6edf3;
+}
+
+.tvs-strava-description {
+  margin: 0 0 24px;
+  color: #9fb0c8;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.tvs-strava-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  text-align: left;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tvs-strava-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  color: #e6edf3;
+  font-size: 14px;
+}
+
+.tvs-btn--strava {
+  background: var(--tvs-strava-orange);
+  color: #ffffff;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tvs-btn--strava:hover {
+  background: #e04502;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(252, 76, 2, 0.3);
+}
+
+.tvs-strava-privacy {
+  margin: 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.tvs-strava-card--connected {
+  text-align: left;
+}
+
+.tvs-strava-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.tvs-strava-user {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.tvs-strava-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--tvs-strava-orange);
+}
+
+.tvs-strava-username {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #e6edf3;
+}
+
+.tvs-strava-status {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #2a5d34;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tvs-strava-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tvs-strava-stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--tvs-strava-border);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+.tvs-strava-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tvs-strava-orange);
+  margin-bottom: 4px;
+}
+
+.tvs-strava-stat-label {
+  font-size: 12px;
+  color: #9fb0c8;
+}
+
+.tvs-strava-sync {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.tvs-strava-sync-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9fb0c8;
+  font-size: 13px;
+}
+
+.tvs-strava-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.tvs-btn--danger {
+  background: transparent;
+  color: #ff4444;
+  border: 1px solid #ff4444;
+}
+
+.tvs-btn--danger:hover {
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.tvs-spinner svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.tvs-strava-loading,
+.tvs-strava-error {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.tvs-strava-loading h3,
+.tvs-strava-error h3 {
+  margin: 20px 0 8px;
+  font-size: 20px;
+  color: #e6edf3;
+}
+
+.tvs-strava-loading p,
+.tvs-strava-error p {
+  margin: 0 0 24px;
+  color: #9fb0c8;
+}
+
+@media (max-width: 767px) {
+  .tvs-strava-card {
+    padding: 24px;
+  }
+
+  .tvs-strava-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .tvs-strava-sync {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .tvs-strava-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .tvs-strava-actions button {
+    width: 100%;
+  }
+}

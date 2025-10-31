@@ -1,0 +1,221 @@
+<!-- Activity Summary - User's Recent Sessions -->
+<!-- Mobile-first, dark theme, accessible -->
+
+<div class="tvs-activity-summary" role="region" aria-labelledby="activity-summary-title">
+  <!-- Header -->
+  <div class="tvs-activity-header">
+    <h2 class="tvs-activity-title" id="activity-summary-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M2 12H7L9 4L15 20L17 12H22" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Recent Activities
+    </h2>
+    <a href="/my-activities" class="tvs-activity-view-all">
+      View All
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Activity List -->
+  <ul class="tvs-activity-list" role="list">
+    <!-- Activity Item 1 - Completed -->
+    <li class="tvs-activity-item" role="listitem">
+      <div class="tvs-activity-icon tvs-activity-icon--completed" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8" fill="currentColor" opacity="0.2"/>
+          <path d="M6 10L9 13L14 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <div class="tvs-activity-content">
+        <div class="tvs-activity-main">
+          <h3 class="tvs-activity-name">
+            <a href="/activities/123">Norway Coastal Path</a>
+          </h3>
+          <time class="tvs-activity-date" datetime="2024-03-15T14:30:00">
+            2 hours ago
+          </time>
+        </div>
+        
+        <div class="tvs-activity-stats">
+          <span class="tvs-activity-stat" aria-label="Distance: 42.5 kilometers">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7H12M7 2L12 7L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            42.5 km
+          </span>
+          <span class="tvs-activity-stat" aria-label="Duration: 2 hours 34 minutes">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 4V7L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            2h 34m
+          </span>
+          <span class="tvs-activity-stat" aria-label="Average pace: 3:40 per kilometer">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 10L4 6L7 8L9 4L12 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            3:40/km
+          </span>
+        </div>
+        
+        <div class="tvs-activity-badges">
+          <span class="tvs-activity-badge tvs-activity-badge--pr" aria-label="Personal record">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M6 1L7 4L10 4.5L7.5 6.5L8 10L6 8.5L4 10L4.5 6.5L2 4.5L5 4L6 1Z" fill="currentColor"/>
+            </svg>
+            PR
+          </span>
+        </div>
+      </div>
+    </li>
+
+    <!-- Activity Item 2 - In Progress -->
+    <li class="tvs-activity-item tvs-activity-item--in-progress" role="listitem">
+      <div class="tvs-activity-icon tvs-activity-icon--in-progress" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2"/>
+          <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <div class="tvs-activity-content">
+        <div class="tvs-activity-main">
+          <h3 class="tvs-activity-name">
+            <a href="/activities/124">Mountain Challenge</a>
+          </h3>
+          <span class="tvs-activity-status">In Progress</span>
+        </div>
+        
+        <div class="tvs-activity-stats">
+          <span class="tvs-activity-stat" aria-label="Distance: 15.2 kilometers">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7H12M7 2L12 7L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            15.2 km <span class="tvs-activity-total">/ 68 km</span>
+          </span>
+          <span class="tvs-activity-stat" aria-label="Duration: 1 hour 12 minutes">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 4V7L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            1h 12m
+          </span>
+        </div>
+        
+        <div class="tvs-activity-progress">
+          <div class="tvs-progress-bar" role="progressbar" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100" aria-label="22% complete">
+            <div class="tvs-progress-fill" style="width: 22%"></div>
+          </div>
+          <button class="tvs-btn-resume" aria-label="Resume activity">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+              <path d="M2 2L10 6L2 10V2Z"/>
+            </svg>
+            Resume
+          </button>
+        </div>
+      </div>
+    </li>
+
+    <!-- Activity Item 3 - Failed/Abandoned -->
+    <li class="tvs-activity-item tvs-activity-item--abandoned" role="listitem">
+      <div class="tvs-activity-icon tvs-activity-icon--abandoned" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
+          <path d="M7 7L13 13M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <div class="tvs-activity-content">
+        <div class="tvs-activity-main">
+          <h3 class="tvs-activity-name">
+            <a href="/activities/125">Lake District Loop</a>
+          </h3>
+          <time class="tvs-activity-date" datetime="2024-03-14T09:15:00">
+            Yesterday
+          </time>
+        </div>
+        
+        <div class="tvs-activity-stats">
+          <span class="tvs-activity-stat" aria-label="Distance: 8.3 kilometers">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7H12M7 2L12 7L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            8.3 km <span class="tvs-activity-total">/ 15 km</span>
+          </span>
+          <span class="tvs-activity-stat" aria-label="Duration: 45 minutes">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 4V7L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            45m
+          </span>
+        </div>
+        
+        <div class="tvs-activity-badges">
+          <span class="tvs-activity-badge tvs-activity-badge--abandoned" aria-label="Activity abandoned">
+            Abandoned
+          </span>
+        </div>
+      </div>
+    </li>
+
+    <!-- Activity Item 4 - Planned -->
+    <li class="tvs-activity-item tvs-activity-item--planned" role="listitem">
+      <div class="tvs-activity-icon tvs-activity-icon--planned" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M7 2V6M13 2V6M3 8H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <div class="tvs-activity-content">
+        <div class="tvs-activity-main">
+          <h3 class="tvs-activity-name">
+            <a href="/routes/fjord-explorer">Fjord Explorer</a>
+          </h3>
+          <time class="tvs-activity-date" datetime="2024-03-20T10:00:00">
+            Planned for March 20
+          </time>
+        </div>
+        
+        <div class="tvs-activity-stats">
+          <span class="tvs-activity-stat" aria-label="Distance: 55 kilometers">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7H12M7 2L12 7L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            55 km
+          </span>
+          <span class="tvs-activity-stat" aria-label="Estimated duration: 4-5 hours">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 4V7L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            4-5h
+          </span>
+          <span class="tvs-activity-stat" aria-label="Difficulty: Hard">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 10L4 6L7 8L9 4L12 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Hard
+          </span>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Empty State (when no activities) -->
+  <div class="tvs-activity-empty" hidden>
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+      <path d="M20 32H32M32 20V32L40 40" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+    </svg>
+    <h3>No Activities Yet</h3>
+    <p>Start your first route to see your activity history here.</p>
+    <a href="/routes" class="tvs-btn tvs-btn--primary">
+      Browse Routes
+    </a>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+/* Minimap + Elevation */
+.tvs-minimap {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 300px;
+  background: rgba(11, 11, 11, 0.95);
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  z-index: 90;
+}
+
+.tvs-minimap-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/2;
+}
+
+.tvs-minimap-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tvs-minimap-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #4aa6e0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px rgba(74, 166, 224, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(74, 166, 224, 0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(74, 166, 224, 0.1); }
+}
+
+.tvs-elevation-overlay {
+  padding: 12px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.tvs-elevation-chart {
+  width: 100%;
+  height: 80px;
+  display: block;
+}
+
+.tvs-elevation-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  color: #9fb0c8;
+  font-size: 12px;
+}
+
+.tvs-elevation-stats strong {
+  color: #4aa6e0;
+}
+
+@media (max-width: 767px) {
+  .tvs-minimap {
+    width: 200px;
+    bottom: 80px;
+    right: 12px;
+  }
+}

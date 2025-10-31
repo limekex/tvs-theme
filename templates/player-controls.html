@@ -1,0 +1,57 @@
+<!-- Player Controls - Pace-match, Transport, Tooltips -->
+<div class="tvs-player-controls" role="region" aria-label="Video player controls">
+  <div class="tvs-player-bar">
+    <!-- Transport Controls -->
+    <div class="tvs-player-group">
+      <button class="tvs-player-btn" aria-label="Previous section" title="Previous (Left Arrow)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M15 4L8 10L15 16V4Z"/><rect x="5" y="4" width="2" height="12"/></svg>
+      </button>
+      
+      <button class="tvs-player-btn tvs-player-btn--play" aria-label="Play" title="Play/Pause (Space)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5L18 12L8 19V5Z"/></svg>
+      </button>
+      
+      <button class="tvs-player-btn" aria-label="Next section" title="Next (Right Arrow)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><rect x="13" y="4" width="2" height="12"/><path d="M5 4L12 10L5 16V4Z"/></svg>
+      </button>
+    </div>
+
+    <!-- Time Display -->
+    <div class="tvs-player-time">
+      <time>0:45</time>
+      <span>/</span>
+      <time>42:30</time>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="tvs-player-progress-container">
+      <input type="range" class="tvs-player-progress" value="2" min="0" max="100" aria-label="Video progress"/>
+      <div class="tvs-player-tooltip" role="tooltip" hidden>
+        <span>5:20</span>
+      </div>
+    </div>
+
+    <!-- Secondary Controls -->
+    <div class="tvs-player-group">
+      <!-- Pace Match -->
+      <div class="tvs-player-pace">
+        <button class="tvs-player-btn tvs-player-btn--pace" aria-label="Pace match enabled" title="Toggle pace matching">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10H6L8 4L12 16L14 10H18" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <span class="tvs-player-pace-value">3:45/km</span>
+      </div>
+      
+      <button class="tvs-player-btn" aria-label="Volume: 80%" title="Mute (M)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 4L6 8H2V12H6L10 16V4Z"/><path d="M14 7C15.3 8.3 15.3 10.7 14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      
+      <button class="tvs-player-btn" aria-label="Settings" title="Settings">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="2"/><path d="M10 2L11 6L15 7L12 10L13 14L10 12L7 14L8 10L5 7L9 6L10 2Z" opacity="0.5"/></svg>
+      </button>
+      
+      <button class="tvs-player-btn" aria-label="Fullscreen" title="Fullscreen (F)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 7V3H7M13 3H17V7M17 13V17H13M7 17H3V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
