@@ -1,10 +1,21 @@
 <?php
 /** Enqueue theme assets */
 add_action( 'wp_enqueue_scripts', function() {
+    // 0) Design tokens (loaded first, globally)
+    $tokens_path = get_template_directory() . '/assets/css/tvs-tokens.css';
+    if ( file_exists( $tokens_path ) ) {
+        wp_enqueue_style( 
+            'tvs-tokens', 
+            get_theme_file_uri( 'assets/css/tvs-tokens.css' ), 
+            [], 
+            filemtime( $tokens_path ) 
+        );
+    }
+
     // 1) Hoved-stylesheet (style.css) – versjoneres med filemtime
     $style_path = get_template_directory() . '/style.css';
     $style_ver  = file_exists( $style_path ) ? filemtime( $style_path ) : wp_get_theme()->get( 'Version' );
-    wp_enqueue_style( 'nvs-style', get_stylesheet_uri(), [], $style_ver );
+    wp_enqueue_style( 'nvs-style', get_stylesheet_uri(), ['tvs-tokens'], $style_ver );
 
     // 2) Registrer app-ressurser (JS/CSS) – lastes kun der vi trenger dem
     $theme      = wp_get_theme();

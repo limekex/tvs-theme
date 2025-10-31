@@ -14,6 +14,8 @@ Where to start
 - `block-templates/` contains the HTML template placeholders for front-page, archive and single templates.
 - `blocks/` contains minimal block manifests and starter JS.
 - `inc/` has enqueue and REST mock endpoints for local development.
+- `docs/ui/` contains design system documentation and visual examples.
+- `assets/css/tvs-tokens.css` contains the global design token system.
 
 Notes
 - Blocks are currently placeholders using `save() { return null }` for server rendering.
