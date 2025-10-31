@@ -1,0 +1,156 @@
+<!-- Strava Connect - Connect/Disconnect in Dark UI -->
+<!-- Mobile-first, dark theme, accessible -->
+
+<div class="tvs-strava-connect" role="region" aria-labelledby="strava-title">
+  <!-- Not Connected State -->
+  <div class="tvs-strava-card tvs-strava-card--disconnected">
+    <div class="tvs-strava-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 8L32 24H28L24 16L20 24H16L24 8Z" fill="#FC4C02"/>
+        <path d="M28 24L32 32L36 24H28Z" fill="#FC4C02" opacity="0.7"/>
+      </svg>
+    </div>
+    
+    <h2 class="tvs-strava-title" id="strava-title">Connect with Strava</h2>
+    <p class="tvs-strava-description">
+      Link your Strava account to automatically sync your activities and track your progress.
+    </p>
+    
+    <ul class="tvs-strava-features" role="list">
+      <li class="tvs-strava-feature">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8" fill="#2a5d34"/>
+          <path d="M6 10L9 13L14 8" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Auto-sync activities</span>
+      </li>
+      <li class="tvs-strava-feature">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8" fill="#2a5d34"/>
+          <path d="M6 10L9 13L14 8" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Track personal records</span>
+      </li>
+      <li class="tvs-strava-feature">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8" fill="#2a5d34"/>
+          <path d="M6 10L9 13L14 8" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>View detailed analytics</span>
+      </li>
+    </ul>
+    
+    <button class="tvs-btn tvs-btn--strava" aria-label="Connect to Strava">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M10 2L14 10H12L10 6L8 10H6L10 2Z"/>
+        <path d="M12 10L14 14L16 10H12Z"/>
+      </svg>
+      Connect with Strava
+    </button>
+    
+    <p class="tvs-strava-privacy">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 1L2 3V7C2 10 7 13 7 13C7 13 12 10 12 7V3L7 1Z" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      Your data is secure and will never be shared
+    </p>
+  </div>
+
+  <!-- Connected State -->
+  <div class="tvs-strava-card tvs-strava-card--connected" hidden>
+    <div class="tvs-strava-header">
+      <div class="tvs-strava-user">
+        <img src="/avatar-placeholder.jpg" alt="" class="tvs-strava-avatar" width="48" height="48"/>
+        <div class="tvs-strava-user-info">
+          <h2 class="tvs-strava-username">John Athlete</h2>
+          <p class="tvs-strava-status">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <circle cx="6" cy="6" r="5" fill="#2a5d34"/>
+            </svg>
+            Connected
+          </p>
+        </div>
+      </div>
+      
+      <button class="tvs-strava-menu-btn" aria-label="Options" aria-expanded="false" aria-haspopup="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="4" r="1.5" fill="currentColor"/>
+          <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+          <circle cx="10" cy="16" r="1.5" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="tvs-strava-stats">
+      <div class="tvs-strava-stat-card">
+        <div class="tvs-strava-stat-value">24</div>
+        <div class="tvs-strava-stat-label">Synced Activities</div>
+      </div>
+      <div class="tvs-strava-stat-card">
+        <div class="tvs-strava-stat-value">582 km</div>
+        <div class="tvs-strava-stat-label">Total Distance</div>
+      </div>
+      <div class="tvs-strava-stat-card">
+        <div class="tvs-strava-stat-value">42h</div>
+        <div class="tvs-strava-stat-label">Total Time</div>
+      </div>
+    </div>
+    
+    <div class="tvs-strava-sync">
+      <div class="tvs-strava-sync-info">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 4V8L11 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Last synced: 5 minutes ago</span>
+      </div>
+      <button class="tvs-btn tvs-btn--secondary tvs-btn--sm" aria-label="Sync now">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M12 7C12 9.8 9.8 12 7 12C4.2 12 2 9.8 2 7C2 4.2 4.2 2 7 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M7 2L10 2L10 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Sync Now
+      </button>
+    </div>
+    
+    <div class="tvs-strava-actions">
+      <button class="tvs-btn tvs-btn--secondary" aria-label="View Strava profile">
+        Visit Strava Profile
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M10 2H12V4M12 2L7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M11 8V11C11 11.5 10.5 12 10 12H3C2.5 12 2 11.5 2 11V4C2 3.5 2.5 3 3 3H6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button class="tvs-btn tvs-btn--danger" aria-label="Disconnect from Strava">
+        Disconnect
+      </button>
+    </div>
+  </div>
+
+  <!-- Connecting State (Loading) -->
+  <div class="tvs-strava-card tvs-strava-card--connecting" hidden>
+    <div class="tvs-strava-loading">
+      <div class="tvs-spinner" role="status" aria-label="Connecting to Strava">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" opacity="0.2"/>
+          <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="80 100"/>
+        </svg>
+      </div>
+      <h3>Connecting to Strava...</h3>
+      <p>Please wait while we establish the connection.</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="tvs-strava-card tvs-strava-card--error" hidden>
+    <div class="tvs-strava-error">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="20" stroke="#ff4444" stroke-width="3"/>
+        <path d="M24 14V26M24 30V32" stroke="#ff4444" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <h3>Connection Failed</h3>
+      <p>We couldn't connect to your Strava account. Please try again.</p>
+      <button class="tvs-btn tvs-btn--primary">Retry Connection</button>
+    </div>
+  </div>
+</div>

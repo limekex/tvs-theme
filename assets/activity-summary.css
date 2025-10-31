@@ -1,0 +1,321 @@
+/* Activity Summary - User's Recent Sessions */
+/* Dark theme, mobile-first, accessible */
+
+:root {
+  --tvs-activity-bg: #141414;
+  --tvs-activity-border: #1a1a1a;
+  --tvs-activity-hover: #1f1f1f;
+  --tvs-activity-text: #e6edf3;
+  --tvs-activity-text-muted: #9fb0c8;
+  
+  --tvs-activity-completed: #2a5d34;
+  --tvs-activity-in-progress: #4aa6e0;
+  --tvs-activity-abandoned: #ff4444;
+  --tvs-activity-planned: #9fb0c8;
+  --tvs-activity-pr: #FFD700;
+}
+
+.tvs-activity-summary {
+  background: var(--tvs-activity-bg);
+  border: 1px solid var(--tvs-activity-border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.tvs-activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tvs-activity-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tvs-activity-text);
+}
+
+.tvs-activity-title svg {
+  color: var(--tvs-activity-in-progress);
+}
+
+.tvs-activity-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tvs-activity-in-progress);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.tvs-activity-view-all:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.tvs-activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tvs-activity-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--tvs-activity-hover);
+  border: 1px solid var(--tvs-activity-border);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.tvs-activity-item:hover {
+  border-color: #2a2a2a;
+  transform: translateX(2px);
+}
+
+.tvs-activity-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tvs-activity-icon--completed {
+  color: var(--tvs-activity-completed);
+  background: rgba(42, 93, 52, 0.15);
+}
+
+.tvs-activity-icon--in-progress {
+  color: var(--tvs-activity-in-progress);
+  background: rgba(74, 166, 224, 0.15);
+}
+
+.tvs-activity-icon--abandoned {
+  color: var(--tvs-activity-abandoned);
+  background: rgba(255, 68, 68, 0.15);
+}
+
+.tvs-activity-icon--planned {
+  color: var(--tvs-activity-planned);
+  background: rgba(159, 176, 200, 0.15);
+}
+
+.tvs-activity-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tvs-activity-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tvs-activity-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.tvs-activity-name a {
+  color: var(--tvs-activity-text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.tvs-activity-name a:hover {
+  color: var(--tvs-activity-in-progress);
+}
+
+.tvs-activity-date,
+.tvs-activity-status {
+  font-size: 13px;
+  color: var(--tvs-activity-text-muted);
+}
+
+.tvs-activity-status {
+  color: var(--tvs-activity-in-progress);
+  font-weight: 600;
+}
+
+.tvs-activity-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tvs-activity-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tvs-activity-text-muted);
+  font-size: 14px;
+}
+
+.tvs-activity-stat svg {
+  color: var(--tvs-activity-in-progress);
+  flex-shrink: 0;
+}
+
+.tvs-activity-total {
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.tvs-activity-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tvs-activity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tvs-activity-badge--pr {
+  background: rgba(255, 215, 0, 0.15);
+  color: var(--tvs-activity-pr);
+  border: 1px solid var(--tvs-activity-pr);
+}
+
+.tvs-activity-badge--abandoned {
+  background: rgba(255, 68, 68, 0.15);
+  color: var(--tvs-activity-abandoned);
+  border: 1px solid var(--tvs-activity-abandoned);
+}
+
+.tvs-activity-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tvs-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.tvs-progress-fill {
+  height: 100%;
+  background: var(--tvs-activity-in-progress);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.tvs-btn-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--tvs-activity-in-progress);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tvs-btn-resume:hover {
+  background: #5bb6f0;
+  transform: scale(1.05);
+}
+
+.tvs-activity-item--in-progress {
+  border-color: rgba(74, 166, 224, 0.3);
+}
+
+.tvs-activity-item--abandoned {
+  opacity: 0.7;
+}
+
+.tvs-activity-item--planned {
+  border-style: dashed;
+}
+
+.tvs-activity-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--tvs-activity-text-muted);
+}
+
+.tvs-activity-empty svg {
+  margin-bottom: 20px;
+  color: var(--tvs-activity-text-muted);
+}
+
+.tvs-activity-empty h3 {
+  margin: 0 0 8px;
+  color: var(--tvs-activity-text);
+  font-size: 18px;
+}
+
+.tvs-activity-empty p {
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .tvs-activity-summary {
+    padding: 24px;
+  }
+
+  .tvs-activity-item {
+    padding: 20px;
+  }
+
+  .tvs-activity-icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tvs-activity-item,
+  .tvs-btn-resume,
+  .tvs-progress-fill {
+    transition: none;
+  }
+
+  .tvs-activity-item:hover {
+    transform: none;
+  }
+
+  .tvs-btn-resume:hover {
+    transform: none;
+  }
+}

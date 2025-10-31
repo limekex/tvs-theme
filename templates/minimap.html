@@ -1,0 +1,18 @@
+<!-- Minimap + Elevation Overlay -->
+<div class="tvs-minimap" role="complementary" aria-label="Route minimap">
+  <div class="tvs-minimap-container">
+    <canvas class="tvs-minimap-canvas" width="300" height="200" aria-label="Route map"></canvas>
+    <div class="tvs-minimap-marker" aria-hidden="true"></div>
+  </div>
+  
+  <div class="tvs-elevation-overlay">
+    <svg class="tvs-elevation-chart" viewBox="0 0 300 80" aria-label="Elevation profile">
+      <path d="M0,60 L50,55 L100,40 L150,30 L200,45 L250,50 L300,55" fill="rgba(74,166,224,0.2)" stroke="#4aa6e0" stroke-width="2"/>
+      <circle cx="100" cy="40" r="4" fill="#4aa6e0"/>
+    </svg>
+    <div class="tvs-elevation-stats">
+      <span><strong>850m</strong> elevation</span>
+      <span><strong>15.2km</strong> / 42km</span>
+    </div>
+  </div>
+</div>

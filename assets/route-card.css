@@ -1,0 +1,421 @@
+/* Route Card - Visual specs and states */
+/* Dark theme, mobile-first, accessible */
+
+:root {
+  /* Card Colors */
+  --tvs-card-bg: #141414;
+  --tvs-card-border: #1a1a1a;
+  --tvs-card-hover-border: #2a2a2a;
+  --tvs-card-text: #e6edf3;
+  --tvs-card-text-muted: #9fb0c8;
+  --tvs-card-overlay-bg: rgba(11, 11, 11, 0.85);
+  
+  /* Difficulty Colors */
+  --tvs-difficulty-easy: #2a5d34;
+  --tvs-difficulty-moderate: #d89614;
+  --tvs-difficulty-hard: #ff4444;
+  
+  /* Action Colors */
+  --tvs-primary: #4aa6e0;
+  --tvs-primary-hover: #5bb6f0;
+  --tvs-secondary: #253049;
+  --tvs-secondary-hover: #2a3550;
+  
+  /* Favorite Color */
+  --tvs-favorite: #FFD700;
+  
+  /* Spacing */
+  --tvs-card-radius: 12px;
+  --tvs-card-padding: 16px;
+}
+
+/* Card Container */
+.tvs-route-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--tvs-card-bg);
+  border: 1px solid var(--tvs-card-border);
+  border-radius: var(--tvs-card-radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tvs-route-card:hover,
+.tvs-route-card:focus-within {
+  border-color: var(--tvs-card-hover-border);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Media Section */
+.tvs-route-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5/3;
+  overflow: hidden;
+  background: #0b0b0b;
+}
+
+.tvs-route-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.tvs-route-card:hover .tvs-route-card__image {
+  transform: scale(1.05);
+}
+
+/* Difficulty Badge */
+.tvs-route-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--tvs-card-overlay-bg);
+  backdrop-filter: blur(8px);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.tvs-route-badge--easy {
+  color: var(--tvs-difficulty-easy);
+  border: 1px solid var(--tvs-difficulty-easy);
+}
+
+.tvs-route-badge--moderate {
+  color: var(--tvs-difficulty-moderate);
+  border: 1px solid var(--tvs-difficulty-moderate);
+}
+
+.tvs-route-badge--hard {
+  color: var(--tvs-difficulty-hard);
+  border: 1px solid var(--tvs-difficulty-hard);
+}
+
+/* Quick Stats Overlay */
+.tvs-route-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(11, 11, 11, 0.95), transparent);
+  z-index: 1;
+}
+
+.tvs-route-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tvs-card-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tvs-route-stat svg {
+  flex-shrink: 0;
+  color: var(--tvs-primary);
+}
+
+/* Favorite Button */
+.tvs-route-card__favorite {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tvs-card-overlay-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--tvs-card-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 3;
+}
+
+.tvs-route-card__favorite:hover,
+.tvs-route-card__favorite:focus-visible {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--tvs-favorite);
+  transform: scale(1.1);
+  outline: none;
+}
+
+.tvs-route-card__favorite--active {
+  color: var(--tvs-favorite);
+  border-color: var(--tvs-favorite);
+}
+
+.tvs-route-card__favorite--active:hover {
+  background: rgba(255, 215, 0, 0.1);
+}
+
+/* Completion Badge */
+.tvs-route-card__completion {
+  position: absolute;
+  top: 60px;
+  right: 12px;
+  z-index: 3;
+  animation: completion-bounce 0.5s ease;
+}
+
+@keyframes completion-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Content Section */
+.tvs-route-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--tvs-card-padding);
+}
+
+/* Title */
+.tvs-route-card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.tvs-route-card__link {
+  color: var(--tvs-card-text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.tvs-route-card__link:hover,
+.tvs-route-card__link:focus-visible {
+  color: var(--tvs-primary);
+  outline: none;
+  text-decoration: underline;
+}
+
+/* Description */
+.tvs-route-card__description {
+  margin: 0;
+  color: var(--tvs-card-text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Achievement Badge */
+.tvs-route-card__achievement {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid var(--tvs-favorite);
+  border-radius: 8px;
+  color: var(--tvs-favorite);
+  font-size: 13px;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+/* Meta Info */
+.tvs-route-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--tvs-card-border);
+}
+
+.tvs-route-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tvs-card-text-muted);
+  font-size: 13px;
+}
+
+.tvs-route-meta-item svg {
+  flex-shrink: 0;
+  color: var(--tvs-primary);
+}
+
+/* Action Bar */
+.tvs-route-card__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.tvs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.tvs-btn--sm {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.tvs-btn--primary {
+  background: var(--tvs-primary);
+  color: #ffffff;
+}
+
+.tvs-btn--primary:hover,
+.tvs-btn--primary:focus-visible {
+  background: var(--tvs-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 166, 224, 0.3);
+  outline: 2px solid var(--tvs-primary);
+  outline-offset: 2px;
+}
+
+.tvs-btn--secondary {
+  background: var(--tvs-secondary);
+  color: var(--tvs-card-text);
+  border: 1px solid var(--tvs-card-border);
+}
+
+.tvs-btn--secondary:hover,
+.tvs-btn--secondary:focus-visible {
+  background: var(--tvs-secondary-hover);
+  border-color: var(--tvs-primary);
+  outline: none;
+}
+
+/* States */
+
+/* Favorited State */
+.tvs-route-card--favorited {
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+/* Completed State */
+.tvs-route-card--completed {
+  border-color: rgba(42, 93, 52, 0.3);
+}
+
+.tvs-route-card--completed .tvs-route-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(42, 93, 52, 0.1), transparent);
+  pointer-events: none;
+}
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .tvs-route-card__content {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .tvs-route-card__title {
+    font-size: 20px;
+  }
+
+  .tvs-route-card__description {
+    font-size: 15px;
+  }
+
+  .tvs-btn {
+    flex: 0 1 auto;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .tvs-route-card__actions {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+
+  .tvs-route-card:hover .tvs-route-card__actions,
+  .tvs-route-card:focus-within .tvs-route-card__actions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tvs-route-card,
+  .tvs-route-card__image,
+  .tvs-route-card__favorite,
+  .tvs-route-card__actions,
+  .tvs-btn {
+    transition: none;
+  }
+
+  .tvs-route-card:hover .tvs-route-card__image {
+    transform: none;
+  }
+
+  .tvs-route-card:hover {
+    transform: none;
+  }
+
+  @keyframes completion-bounce {
+    0%, 100% { transform: scale(1); }
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .tvs-route-card {
+    border-width: 2px;
+  }
+
+  .tvs-route-badge {
+    border-width: 2px;
+  }
+
+  .tvs-btn--secondary {
+    border-width: 2px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .tvs-route-card__favorite,
+  .tvs-route-card__actions {
+    display: none;
+  }
+
+  .tvs-route-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

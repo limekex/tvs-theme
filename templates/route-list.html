@@ -1,0 +1,246 @@
+<!-- Route List/Grid - Filters and Chips -->
+<!-- Mobile-first, dark theme, accessible -->
+
+<div class="tvs-route-list-container">
+  <!-- Filter Bar -->
+  <div class="tvs-filter-bar" role="search" aria-label="Route filters">
+    <!-- Search Input -->
+    <div class="tvs-search-box">
+      <label for="route-search" class="tvs-sr-only">Search routes</label>
+      <svg class="tvs-search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 12L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input 
+        type="search" 
+        id="route-search" 
+        class="tvs-search-input"
+        placeholder="Search routes..."
+        aria-describedby="search-help"
+      />
+      <button class="tvs-search-clear" aria-label="Clear search" hidden>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <span id="search-help" class="tvs-sr-only">Type to search by route name or location</span>
+
+    <!-- Filter Buttons -->
+    <div class="tvs-filter-actions">
+      <!-- Difficulty Filter -->
+      <div class="tvs-filter-dropdown">
+        <button 
+          class="tvs-filter-btn" 
+          aria-expanded="false" 
+          aria-controls="difficulty-menu"
+          aria-haspopup="true"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8L6 4L10 10L14 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Difficulty</span>
+          <svg class="tvs-filter-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        
+        <div id="difficulty-menu" class="tvs-filter-menu" role="menu" hidden>
+          <label class="tvs-filter-option" role="menuitemcheckbox" aria-checked="false">
+            <input type="checkbox" name="difficulty" value="easy" />
+            <span class="tvs-filter-checkbox"></span>
+            <span class="tvs-difficulty-dot tvs-difficulty-dot--easy" aria-hidden="true"></span>
+            <span>Easy</span>
+          </label>
+          <label class="tvs-filter-option" role="menuitemcheckbox" aria-checked="false">
+            <input type="checkbox" name="difficulty" value="moderate" />
+            <span class="tvs-filter-checkbox"></span>
+            <span class="tvs-difficulty-dot tvs-difficulty-dot--moderate" aria-hidden="true"></span>
+            <span>Moderate</span>
+          </label>
+          <label class="tvs-filter-option" role="menuitemcheckbox" aria-checked="false">
+            <input type="checkbox" name="difficulty" value="hard" />
+            <span class="tvs-filter-checkbox"></span>
+            <span class="tvs-difficulty-dot tvs-difficulty-dot--hard" aria-hidden="true"></span>
+            <span>Hard</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Distance Filter -->
+      <div class="tvs-filter-dropdown">
+        <button 
+          class="tvs-filter-btn" 
+          aria-expanded="false" 
+          aria-controls="distance-menu"
+          aria-haspopup="true"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8H14M8 2L14 8L8 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Distance</span>
+          <svg class="tvs-filter-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        
+        <div id="distance-menu" class="tvs-filter-menu" role="menu" hidden>
+          <label class="tvs-filter-option" role="menuitemradio" aria-checked="false">
+            <input type="radio" name="distance" value="short" />
+            <span class="tvs-filter-radio"></span>
+            <span>Short (< 20 km)</span>
+          </label>
+          <label class="tvs-filter-option" role="menuitemradio" aria-checked="false">
+            <input type="radio" name="distance" value="medium" />
+            <span class="tvs-filter-radio"></span>
+            <span>Medium (20-50 km)</span>
+          </label>
+          <label class="tvs-filter-option" role="menuitemradio" aria-checked="false">
+            <input type="radio" name="distance" value="long" />
+            <span class="tvs-filter-radio"></span>
+            <span>Long (50+ km)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="tvs-filter-dropdown">
+        <button 
+          class="tvs-filter-btn" 
+          aria-expanded="false" 
+          aria-controls="sort-menu"
+          aria-haspopup="true"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 2V14M4 14L2 12M4 14L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 6H14M8 10H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Sort</span>
+          <svg class="tvs-filter-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        
+        <div id="sort-menu" class="tvs-filter-menu" role="menu" hidden>
+          <button class="tvs-filter-option tvs-filter-option--active" role="menuitemradio" aria-checked="true">
+            <span class="tvs-filter-radio-dot" aria-hidden="true"></span>
+            <span>Most Popular</span>
+          </button>
+          <button class="tvs-filter-option" role="menuitemradio" aria-checked="false">
+            <span class="tvs-filter-radio-dot" aria-hidden="true"></span>
+            <span>Newest First</span>
+          </button>
+          <button class="tvs-filter-option" role="menuitemradio" aria-checked="false">
+            <span class="tvs-filter-radio-dot" aria-hidden="true"></span>
+            <span>Distance (Low to High)</span>
+          </button>
+          <button class="tvs-filter-option" role="menuitemradio" aria-checked="false">
+            <span class="tvs-filter-radio-dot" aria-hidden="true"></span>
+            <span>Distance (High to Low)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- View Toggle (Grid/List) -->
+      <div class="tvs-view-toggle" role="radiogroup" aria-label="View mode">
+        <button 
+          class="tvs-view-btn tvs-view-btn--active" 
+          role="radio" 
+          aria-checked="true"
+          aria-label="Grid view"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+            <rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+            <rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+            <rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+        <button 
+          class="tvs-view-btn" 
+          role="radio" 
+          aria-checked="false"
+          aria-label="List view"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <rect x="1" y="2" width="14" height="3" rx="1" stroke="currentColor" stroke-width="2"/>
+            <rect x="1" y="7" width="14" height="3" rx="1" stroke="currentColor" stroke-width="2"/>
+            <rect x="1" y="12" width="14" height="3" rx="1" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Filter Chips -->
+  <div class="tvs-filter-chips" role="status" aria-live="polite" aria-label="Active filters">
+    <div class="tvs-chips-list">
+      <button class="tvs-chip" aria-label="Remove filter: Moderate difficulty">
+        <span>Moderate</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M4 4L10 10M10 4L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      
+      <button class="tvs-chip" aria-label="Remove filter: Medium distance">
+        <span>20-50 km</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M4 4L10 10M10 4L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      
+      <button class="tvs-chip tvs-chip--search" aria-label="Clear search: coastal">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9 9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>coastal</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M4 4L10 10M10 4L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      
+      <button class="tvs-chip-clear-all" aria-label="Clear all filters">
+        Clear all
+      </button>
+    </div>
+    
+    <div class="tvs-results-count" aria-live="polite">
+      <strong>24 routes</strong> found
+    </div>
+  </div>
+
+  <!-- Route Grid -->
+  <div class="tvs-route-grid" role="feed" aria-label="Routes list" aria-busy="false">
+    <!-- Route cards would be inserted here -->
+    <!-- Example: -->
+    <div class="tvs-grid-placeholder">
+      <p>Route cards from templates/route-card.html would appear here</p>
+    </div>
+  </div>
+
+  <!-- Load More / Pagination -->
+  <div class="tvs-pagination">
+    <button class="tvs-btn tvs-btn--secondary tvs-btn--load-more" aria-label="Load more routes">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 2V14M8 14L4 10M8 14L12 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Load More Routes
+    </button>
+  </div>
+</div>
+
+<!-- Screen Reader Only Helper Class -->
+<style>
+.tvs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+</style>

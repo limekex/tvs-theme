@@ -1,0 +1,25 @@
+<!-- Heatmap Overlay -->
+<div class="tvs-heatmap" role="complementary" aria-label="Activity heatmap">
+  <div class="tvs-heatmap-controls">
+    <h3>Activity Heatmap</h3>
+    <select class="tvs-heatmap-filter" aria-label="Filter by activity type">
+      <option>All Activities</option>
+      <option>Cycling</option>
+      <option>Running</option>
+    </select>
+    <select class="tvs-heatmap-period" aria-label="Time period">
+      <option>Last 30 Days</option>
+      <option>Last 90 Days</option>
+      <option>All Time</option>
+    </select>
+  </div>
+  
+  <div class="tvs-heatmap-canvas">
+    <canvas width="800" height="600" aria-label="Heatmap visualization"></canvas>
+    <div class="tvs-heatmap-legend">
+      <span>Low</span>
+      <div class="tvs-heatmap-gradient"></div>
+      <span>High</span>
+    </div>
+  </div>
+</div>

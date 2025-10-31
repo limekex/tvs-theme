@@ -1,0 +1,146 @@
+/* Player Controls */
+:root {
+  --tvs-player-bg: rgba(11, 11, 11, 0.95);
+  --tvs-player-accent: #4aa6e0;
+}
+
+.tvs-player-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--tvs-player-bg);
+  backdrop-filter: blur(8px);
+}
+
+.tvs-player-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+}
+
+.tvs-player-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tvs-player-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: #e6edf3;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tvs-player-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.tvs-player-btn--play {
+  width: 48px;
+  height: 48px;
+  background: var(--tvs-player-accent);
+}
+
+.tvs-player-btn--play:hover {
+  background: #5bb6f0;
+}
+
+.tvs-player-btn--pace {
+  color: var(--tvs-player-accent);
+}
+
+.tvs-player-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e6edf3;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tvs-player-progress-container {
+  position: relative;
+  flex: 1;
+}
+
+.tvs-player-progress {
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tvs-player-progress::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--tvs-player-accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tvs-player-tooltip {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.tvs-player-pace {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(74, 166, 224, 0.15);
+  border-radius: 999px;
+}
+
+.tvs-player-pace-value {
+  color: var(--tvs-player-accent);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .tvs-player-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tvs-player-progress-container {
+    order: -1;
+    width: 100%;
+  }
+
+  .tvs-player-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .tvs-player-btn--play {
+    width: 44px;
+    height: 44px;
+  }
+}
