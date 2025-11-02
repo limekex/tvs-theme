@@ -5,6 +5,6 @@
   "title": "My Activities",
   "category": "widgets",
   "icon": "admin-users",
-  "editorScript": "file:./src/index.js",
+  "editorScript": "tvs-theme-blocks",
   "attributes": {}
 }

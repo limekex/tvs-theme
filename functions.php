@@ -4,6 +4,7 @@
 require get_template_directory() . '/inc/enqueue.php';
 require get_template_directory() . '/inc/rest.php';
 require get_template_directory() . '/inc/blocks.php';
+require get_template_directory() . '/inc/media.php';
 
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'wp-block-styles' );

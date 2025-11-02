@@ -1,12 +1,24 @@
 <!-- Connect Strava page template -->
-<div class="strava-connect">
-	<h1>Koble til Strava</h1>
-	<div id="strava-status">
-		<p>Venter på tilkobling ...</p>
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:group {"tagName":"main","align":"full","className":"tvs-main"} -->
+<main class="wp-block-group alignfull tvs-main">
+	<!-- wp:group {"className":"tvs-container tvs-stack"} -->
+	<div class="wp-block-group tvs-container tvs-stack">
+		<h1>Koble til Strava</h1>
+		<section class="tvs-card">
+			<div id="strava-status">
+				<p class="tvs-text-tertiary">Venter på tilkobling ...</p>
+			</div>
+					<div id="strava-connect-btn">
+						<p class="tvs-text-tertiary tvs-text-sm">Laster...</p>
+					</div>
+					<p class="tvs-text-tertiary tvs-text-sm">Du må være innlogget for å koble til Strava.</p>
+			<!-- JS will handle code, POST, and redirect/error -->
+		</section>
 	</div>
-	<div id="strava-connect-btn" style="margin:2em 0;">
-		<p style="font-size:0.9em;color:#666;">Laster...</p>
-	</div>
-	<p style="font-size:0.9em;color:#666;">Du må være innlogget for å koble til Strava.</p>
-	<!-- JS will handle code, POST, and redirect/error -->
-</div>
+	<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->

@@ -5,7 +5,7 @@
   "title": "Route Card",
   "category": "widgets",
   "icon": "location",
-  "editorScript": "file:./src/index.js",
+  "editorScript": "tvs-theme-blocks",
   "style": "file:./style.css",
   "attributes": {
     "routeId": { "type": "number" }

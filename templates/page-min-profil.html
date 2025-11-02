@@ -1,24 +1,29 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<main class="wp-block-group alignfull" style="margin-block-start:var(--wp--style--block-gap);padding:2em;">
-	<div class="wp-block-group__inner-container">
-		<h1>Min profil</h1>
-		
-		<div id="profile-messages" style="margin:2em 0;"></div>
-		
-		<section style="background:#f9f9f9;padding:2em;border-radius:8px;margin:2em 0;">
-			<h2 style="margin-top:0;">Strava-tilkobling</h2>
-			<div id="strava-status-section">
-				<p style="color:#666;">Laster status ...</p>
-			</div>
-		</section>
-		
-		<section style="background:#f9f9f9;padding:2em;border-radius:8px;margin:2em 0;">
-			<h2 style="margin-top:0;">Mine aktiviteter</h2>
-			<p><a href="/my-activities/" class="button">Vis mine aktiviteter</a></p>
-		</section>
+<!-- wp:group {"tagName":"main","align":"full","className":"tvs-main"} -->
+<main class="wp-block-group alignfull tvs-main">
+	<!-- wp:group {"className":"tvs-container tvs-stack"} -->
+	<div class="wp-block-group tvs-container tvs-stack">
+		<!-- wp:heading {"level":1} --> <h1>Min profil</h1> <!-- /wp:heading -->
+
+        <div id="profile-messages"></div>
+
+        <section class="tvs-card">
+            <h2>Strava-tilkobling</h2>
+            <div id="strava-status-section">
+                <p class="tvs-text-tertiary">Laster status ...</p>
+            </div>
+        </section>
+
+        <section class="tvs-card">
+            <h2>Mine aktiviteter</h2>
+            <p><a href="/my-activities/" class="button">Vis mine aktiviteter</a></p>
+        </section>
 	</div>
+	<!-- /wp:group -->
+    
 </main>
+<!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
 

@@ -381,3 +381,5 @@ body {
 .tvs-text-primary { color: var(--tvs-color-text-primary); }
 .tvs-text-secondary { color: var(--tvs-color-text-secondary); }
 .tvs-text-tertiary { color: var(--tvs-color-text-tertiary); }
+/* Size utilities */
+.tvs-text-sm { font-size: var(--tvs-text-sm); }

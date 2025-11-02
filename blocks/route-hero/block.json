@@ -5,5 +5,5 @@
   "title": "Route Hero",
   "category": "theme",
   "icon": "format-image",
-  "editorScript": "file:./src/index.js"
+  "editorScript": "tvs-theme-blocks"
 }

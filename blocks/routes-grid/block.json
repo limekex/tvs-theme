@@ -6,11 +6,19 @@
   "category": "widgets",
   "icon": "grid-view",
   "description": "Displays available virtual routes.",
-  "editorScript": "file:./src/index.js",
+  "editorScript": "tvs-theme-blocks",
   "style": "file:./style.css",
   "render": "file:./render.php",
   "supports": { "align": ["wide", "full"] },
   "attributes": {
-    "perPage": { "type": "number", "default": 9 }
+    "perPage": { "type": "number", "default": 9 },
+    "orderBy": { "type": "string", "default": "date" },
+    "order": { "type": "string", "default": "DESC" },
+    "region": { "type": "string", "default": "" },
+    "season": { "type": "string", "default": "" },
+    "columns": { "type": "number", "default": 3 },
+    "showBadges": { "type": "boolean", "default": true },
+    "showMeta": { "type": "boolean", "default": true },
+    "showDifficulty": { "type": "boolean", "default": true }
   }
 }

@@ -100,4 +100,17 @@ add_action( 'wp_enqueue_scripts', function() {
             );
         }
     }
+
+    // 4) Global nav dropdown helper (sets header height var, ensures burger toggles)
+    $nav_js_rel = 'assets/nav-dropdown.js';
+    $nav_js_abs = get_template_directory() . '/' . $nav_js_rel;
+    if ( file_exists( $nav_js_abs ) ) {
+        wp_enqueue_script(
+            'tvs-nav-dropdown',
+            get_theme_file_uri( $nav_js_rel ),
+            [],
+            filemtime( $nav_js_abs ),
+            true
+        );
+    }
 } );
