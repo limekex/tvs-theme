@@ -20,14 +20,31 @@
       const isConnected = data && data.connected;
       const buttonText = isConnected ? 'Reconnect to Strava' : 'Connect with Strava';
       
-      // Request scopes: activity:write for upload, activity:read_all for updating private activities
-      const authorizeUrl = `https://www.strava.com/oauth/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&approval_prompt=auto&scope=read,activity:read_all,activity:write`;
+      // Request scopes required by v1.2 flows:
+      // - read_all + profile:read_all for listing/importing athlete routes
+      // - activity:read_all + activity:write for uploads and potential privacy updates
+      // Keep 'read' for baseline
+      const scopes = [
+        'read',
+        'read_all',
+        'profile:read_all',
+        'activity:read_all',
+        'activity:write'
+      ].join(',');
+      const authorizeUrl = `https://www.strava.com/oauth/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&approval_prompt=auto&scope=${encodeURIComponent(scopes)}`;
       
       btnContainer.innerHTML = `<a href="${authorizeUrl}" class="button" style="background:#fc4c02;color:#fff;padding:1em 2em;border-radius:4px;text-decoration:none;font-weight:bold;display:inline-block;">${buttonText}</a>`;
     })
     .catch(() => {
       // Fallback if status check fails
-      const authorizeUrl = `https://www.strava.com/oauth/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&approval_prompt=auto&scope=read,activity:read_all,activity:write`;
+      const scopes = [
+        'read',
+        'read_all',
+        'profile:read_all',
+        'activity:read_all',
+        'activity:write'
+      ].join(',');
+      const authorizeUrl = `https://www.strava.com/oauth/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&approval_prompt=auto&scope=${encodeURIComponent(scopes)}`;
       
       btnContainer.innerHTML = `<a href="${authorizeUrl}" class="button" style="background:#fc4c02;color:#fff;padding:1em 2em;border-radius:4px;text-decoration:none;font-weight:bold;display:inline-block;">Connect with Strava</a>`;
     });
