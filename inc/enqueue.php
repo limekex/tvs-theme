@@ -53,8 +53,8 @@ add_action( 'wp_enqueue_scripts', function() {
         );
     }
 
-    // Enqueue app scripts/styles on pages that rely on TVS_SETTINGS (e.g., min-profil, my-activities)
-    if ( function_exists('is_page') && ( is_page( 'min-profil' ) || is_page( 'my-activities' ) ) ) {
+    // Enqueue app scripts/styles on pages that rely on TVS_SETTINGS (e.g., user-profile, my-activities)
+    if ( function_exists('is_page') && ( is_page( 'user-profile' ) || is_page( 'my-activities' ) ) ) {
         if ( wp_script_is( 'tvs-app', 'registered' ) ) {
             wp_enqueue_script( 'tvs-app' );
         }
@@ -112,5 +112,24 @@ add_action( 'wp_enqueue_scripts', function() {
             filemtime( $nav_js_abs ),
             true
         );
+    }
+
+    // 5) Favorites handler (bookmark toggle) – lightweight, enqueue globally
+    $fav_js_rel = 'assets/favorites.js';
+    $fav_js_abs = get_template_directory() . '/' . $fav_js_rel;
+    if ( file_exists( $fav_js_abs ) ) {
+        wp_enqueue_script(
+            'tvs-favorites',
+            get_theme_file_uri( $fav_js_rel ),
+            [],
+            filemtime( $fav_js_abs ),
+            true
+        );
+        // Provide REST root + nonce + login flag
+        wp_localize_script( 'tvs-favorites', 'TVS_SETTINGS', [
+            'restRoot' => get_rest_url(),
+            'nonce'    => wp_create_nonce( 'wp_rest' ),
+            'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
+        ] );
     }
 } );

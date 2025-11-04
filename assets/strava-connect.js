@@ -2,6 +2,7 @@
 (function() {
   const p = new URLSearchParams(location.search);
   let code = p.get('code');
+  const mode = p.get('mode') || '';
   const scope = p.get('scope') || '';
   const status = document.getElementById('strava-status');
   // Fallback: sometimes providers append params in hash fragment
@@ -19,7 +20,12 @@
         .then(r => r.json())
         .then(data => {
           if (data && data.connected) {
-            if (status) status.innerHTML = `<p style="color:green;">✓ Du er allerede koblet til Strava som <strong>${data.athlete_name || 'atlet'}</strong>.</p><p><a href="/min-profil/">Gå til Min Profil</a></p>`;
+            if (mode === 'popup' && window.opener) {
+              try { window.opener.postMessage({ type: 'tvs:strava-connected' }, window.location.origin); } catch(e) {}
+              window.close();
+              return;
+            }
+            if (status) status.innerHTML = `<p style="color:green;">✓ You are already connected to Strava.</p><p><a href="/user-profile/">Go to Profile</a></p>`;
           } else if (data && data.revoked) {
             // Token was revoked on Strava
             if (status) status.innerHTML = `<p style="color:orange;">⚠️ Din Strava-tilkobling har utløpt eller blitt trukket tilbake. Klikk "Connect with Strava" nedenfor for å koble til på nytt.</p>`;
@@ -67,13 +73,18 @@
     })
     .then(() => {
       sessionStorage.removeItem(storageKey);
+      if (mode === 'popup' && window.opener) {
+        try { window.opener.postMessage({ type: 'tvs:strava-connected' }, window.location.origin); } catch(e) {}
+        window.close();
+        return;
+      }
       status.innerHTML = '<p>Strava tilkoblet! Sender deg videre ...</p>';
       // Clean URL before redirect to prevent re-use
       if (window.history && window.history.replaceState) {
         window.history.replaceState({}, document.title, location.pathname);
       }
       setTimeout(() => {
-        location.href = '/min-profil/?strava=ok';
+        location.href = '/user-profile/?strava=ok';
       }, 500);
     })
     .catch((err) => {

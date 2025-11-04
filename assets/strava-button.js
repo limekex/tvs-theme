@@ -4,7 +4,7 @@
   if (!btnContainer || typeof TVS_SETTINGS === 'undefined') return;
   
   const clientId = TVS_SETTINGS.stravaClientId;
-  const redirectUri = `${TVS_SETTINGS.siteUrl}/connect-strava/`;
+  const redirectUri = `${TVS_SETTINGS.siteUrl}/connect-strava/?mode=popup`;
   
   if (!clientId) {
     btnContainer.innerHTML = '<p style="color:#c00;">Strava client ID mangler. Konfigurer dette i WordPress admin under TVS → Strava.</p>';
