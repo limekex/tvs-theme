@@ -10,15 +10,21 @@
   "style": "file:./style.css",
   "render": "file:./render.php",
   "supports": { "align": ["wide", "full"] },
+  "textdomain": "tvs-virtual-sports",
   "attributes": {
     "perPage": { "type": "number", "default": 9 },
     "orderBy": { "type": "string", "default": "date" },
     "order": { "type": "string", "default": "DESC" },
     "region": { "type": "string", "default": "" },
+    "type": { "type": "string", "default": "" },
     "season": { "type": "string", "default": "" },
     "columns": { "type": "number", "default": 3 },
+    "layout": { "type": "string", "enum": ["grid","list"], "default": "grid" },
     "showBadges": { "type": "boolean", "default": true },
     "showMeta": { "type": "boolean", "default": true },
-    "showDifficulty": { "type": "boolean", "default": true }
+    "showDifficulty": { "type": "boolean", "default": true },
+    "showPagination": { "type": "boolean", "default": true },
+    "showMaxResults": { "type": "number", "default": 0 },
+    "showBookmarkButton": { "type": "boolean", "default": false }
   }
 }
