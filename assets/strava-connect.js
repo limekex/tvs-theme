@@ -28,21 +28,21 @@
             if (status) status.innerHTML = `<p style="color:green;">✓ You are already connected to Strava.</p><p><a href="/user-profile/">Go to Profile</a></p>`;
           } else if (data && data.revoked) {
             // Token was revoked on Strava
-            if (status) status.innerHTML = `<p style="color:orange;">⚠️ Din Strava-tilkobling har utløpt eller blitt trukket tilbake. Klikk "Connect with Strava" nedenfor for å koble til på nytt.</p>`;
+            if (status) status.innerHTML = `<p style="color:orange;">⚠️ Your Strava connection has expired or was revoked. Click "Connect with Strava" below to reconnect.</p>`;
           } else {
-            if (status) status.innerHTML = `<p>Ingen Strava-kode funnet. Klikk "Connect with Strava" nedenfor for å koble til.</p>`;
+            if (status) status.innerHTML = `<p>No Strava code found. Click "Connect with Strava" below to connect.</p>`;
           }
         })
         .catch(() => {
-          if (status) status.innerHTML = `<p>Ingen Strava-kode funnet. Klikk "Connect with Strava" nedenfor for å koble til.</p>`;
+          if (status) status.innerHTML = `<p>No Strava code found. Click "Connect with Strava" below to connect.</p>`;
         });
     } else {
-      if (status) status.innerHTML = `<p>Ingen Strava-kode funnet. Klikk "Connect with Strava" nedenfor for å koble til.</p>`;
+      if (status) status.innerHTML = `<p>No Strava code found. Click "Connect with Strava" below to connect.</p>`;
     }
     return;
   }
   if (typeof TVS_SETTINGS === 'undefined') {
-    if (status) status.innerHTML = '<p>Konfigurasjon mangler. Prøv igjen.</p>';
+    if (status) status.innerHTML = '<p>Missing configuration. Please try again.</p>';
     return;
   }
   
@@ -54,7 +54,7 @@
   }
   sessionStorage.setItem(storageKey, code);
   
-  status.innerHTML = '<p>Kobler til Strava ...</p>';
+  status.innerHTML = '<p>Connecting to Strava…</p>';
   fetch(`${TVS_SETTINGS.restRoot}tvs/v1/strava/connect`, {
     method: 'POST',
     headers: {
@@ -66,6 +66,12 @@
     .then(async r => {
       const data = await r.json().catch(() => null);
       if (!r.ok) {
+        // If not authenticated, inform opener with the code so it can complete registration
+        if (r.status === 401 && window.opener) {
+          try { window.opener.postMessage({ type: 'tvs:strava-code', code, scope }, window.location.origin); } catch(e) {}
+          window.close();
+          return Promise.reject(new Error('Auth required'));
+        }
         const msg = data && (data.message || data.code) ? `${data.message} (${data.code})` : `HTTP ${r.status}`;
         throw new Error(msg);
       }
@@ -78,7 +84,7 @@
         window.close();
         return;
       }
-      status.innerHTML = '<p>Strava tilkoblet! Sender deg videre ...</p>';
+  status.innerHTML = '<p>Strava connected! Redirecting…</p>';
       // Clean URL before redirect to prevent re-use
       if (window.history && window.history.replaceState) {
         window.history.replaceState({}, document.title, location.pathname);
@@ -90,7 +96,7 @@
     .catch((err) => {
       sessionStorage.removeItem(storageKey);
       console.error('Strava connect error:', err);
-      const msg = err && err.message ? err.message : 'Ukjent feil';
-      status.innerHTML = `<p>Strava-tilkobling feilet: ${msg}. <button onclick="location.reload()">Prøv igjen</button></p>`;
+  const msg = err && err.message ? err.message : 'Unknown error';
+  status.innerHTML = `<p>Strava connection failed: ${msg}. <button onclick="location.reload()">Try again</button></p>`;
     });
 })();

@@ -39,6 +39,9 @@ add_action( 'init', function() {
 
     // User profile page (English)
     $ensure_page( 'user-profile', 'User profile' );
+    // Auth entry points
+    $ensure_page( 'login', 'Login' );
+    $ensure_page( 'register', 'Register' );
 } );
 
 // Proactively hide any existing legacy /connect-strava page from navigation
@@ -65,6 +68,12 @@ add_action( 'template_redirect', function() {
         $req_uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
         $path    = trim( parse_url( $req_uri, PHP_URL_PATH ), '/' );
     }
+
+    // Redirect logged-in users away from auth entry points
+    if ( is_user_logged_in() && ( $path === 'login' || $path === 'register' ) ) {
+        wp_safe_redirect( home_url( '/user-profile/' ) );
+        exit;
+    }
     if ( $path === 'connect-strava' ) {
         // Only allow when handling OAuth or popup handshake
         $has_code = isset($_GET['code']) && is_string($_GET['code']) && $_GET['code'] !== '';
@@ -84,17 +93,17 @@ add_action( 'template_redirect', function() {
         $script_src = esc_url( get_theme_file_uri( 'assets/strava-connect.js' ) );
         $lang_attrs = function_exists('language_attributes') ? get_language_attributes() : '';
         $charset    = get_bloginfo( 'charset' );
-        echo '<!DOCTYPE html>'
+          echo '<!DOCTYPE html>'
            . '<html ' . $lang_attrs . '>'
            . '<head>'
-           . '<meta charset="' . esc_attr($charset) . '" />'
-           . '<meta name="viewport" content="width=device-width, initial-scale=1" />'
-           . '<meta name="robots" content="noindex, nofollow" />'
-           . '<title>Connecting to Strava…</title>'
+              . '<meta charset="' . esc_attr($charset) . '" />'
+              . '<meta name="viewport" content="width=device-width, initial-scale=1" />'
+              . '<meta name="robots" content="noindex, nofollow" />'
+              . '<title>' . esc_html__( 'Connecting to Strava…', 'tvs-virtual-sports' ) . '</title>'
            . '<style>html,body{height:100%;margin:0;background:#0a0a0b;color:#fff;font:16px/1.5 -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif}.tvs-connect-shell{min-height:100%;display:grid;place-items:center;padding:2rem}#strava-status{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.25rem 1.5rem;max-width:520px;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.35)}#strava-status p{margin:0}</style>'
            . '</head>'
            . '<body class="tvs-connect-strava-min">'
-           . '<main class="tvs-connect-shell"><div id="strava-status"><p>Connecting to Strava…</p></div></main>'
+              . '<main class="tvs-connect-shell"><div id="strava-status"><p>' . esc_html__( 'Connecting to Strava…', 'tvs-virtual-sports' ) . '</p></div></main>'
            . '<script>window.TVS_SETTINGS={restRoot:' . wp_json_encode( $rest ) . ',nonce:' . wp_json_encode( $nonce ) . '};</script>'
            . '<script src="' . $script_src . '"></script>'
            . '</body></html>';

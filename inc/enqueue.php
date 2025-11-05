@@ -63,8 +63,8 @@ add_action( 'wp_enqueue_scripts', function() {
         }
     }
 
-    // 3) Enqueue strava-connect.js only on Strava Connected page (slug: connect-strava)
-    if ( is_page( 'connect-strava' ) ) {
+    // 3) Enqueue Strava assets on connect/login/register pages
+    if ( is_page( 'connect-strava' ) || is_page( 'login' ) || is_page( 'register' ) || ( function_exists('is_page_template') && is_page_template('templates/page-register.html') ) ) {
         $strava_js_rel = 'assets/strava-connect.js';
         $strava_js_abs = get_template_directory() . '/' . $strava_js_rel;
         $strava_btn_js_rel = 'assets/strava-button.js';
@@ -78,13 +78,32 @@ add_action( 'wp_enqueue_scripts', function() {
                 filemtime( $strava_js_abs ),
                 true
             );
-            // Localize nonce, restRoot, and Strava client ID for JS
+            // Localize nonce, restRoot, Strava client ID, and official button image URL for JS
             $strava_client_id = get_option( 'tvs_strava_client_id', '' );
+            // Build a robust public URL to the plugin asset (works with custom content dirs)
+            if ( function_exists('content_url') ) {
+                $strava_btn_img = content_url( 'plugins/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg' );
+            } else {
+                $strava_btn_img = home_url( '/wp-content/plugins/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg' );
+            }
+            // Add a cache-busting query string based on file mtime if possible
+            $strava_img_abs = WP_PLUGIN_DIR . '/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg';
+            if ( file_exists( $strava_img_abs ) && function_exists('add_query_arg') ) {
+                $strava_btn_img = add_query_arg( 'ver', filemtime( $strava_img_abs ), $strava_btn_img );
+            }
             wp_localize_script( 'strava-connect', 'TVS_SETTINGS', [
                 'restRoot' => get_rest_url(),
                 'nonce'    => wp_create_nonce( 'wp_rest' ),
                 'stravaClientId' => $strava_client_id,
                 'siteUrl' => home_url(),
+                'stravaButtonImage' => $strava_btn_img,
+                // Also include recaptchaSiteKey here to avoid overwriting later localizations
+                'recaptchaSiteKey' => ( function(){
+                    $opt = get_option( 'tvs_recaptcha_site_key', '' );
+                    if ( ! empty( $opt ) ) return $opt;
+                    if ( defined( 'TVS_RECAPTCHA_SITE_KEY' ) ) return TVS_RECAPTCHA_SITE_KEY;
+                    return '';
+                } )(),
             ] );
             wp_enqueue_script( 'strava-connect' );
         }
@@ -97,6 +116,54 @@ add_action( 'wp_enqueue_scripts', function() {
                 ['strava-connect'],
                 filemtime( $strava_btn_js_abs ),
                 true
+            );
+        }
+    }
+
+    // 3b) Auth UI helpers (register page behaviors)
+    if ( function_exists('is_page') && ( is_page('register') || is_page('login') ) ) {
+        $auth_js_rel = 'assets/auth.js';
+        $auth_js_abs = get_template_directory() . '/' . $auth_js_rel;
+        $auth_css_rel = 'assets/auth.css';
+        $auth_css_abs = get_template_directory() . '/' . $auth_css_rel;
+        if ( file_exists( $auth_js_abs ) ) {
+            wp_enqueue_script(
+                'tvs-auth',
+                get_theme_file_uri( $auth_js_rel ),
+                [],
+                filemtime( $auth_js_abs ),
+                true
+            );
+            // Provide same Strava button image to avoid overriding the global TVS_SETTINGS without it
+            if ( function_exists('content_url') ) {
+                $strava_btn_img2 = content_url( 'plugins/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg' );
+            } else {
+                $strava_btn_img2 = home_url( '/wp-content/plugins/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg' );
+            }
+            $strava_img_abs2 = WP_PLUGIN_DIR . '/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg';
+            if ( file_exists( $strava_img_abs2 ) && function_exists('add_query_arg') ) {
+                $strava_btn_img2 = add_query_arg( 'ver', filemtime( $strava_img_abs2 ), $strava_btn_img2 );
+            }
+            wp_localize_script( 'tvs-auth', 'TVS_SETTINGS', [
+                'restRoot' => get_rest_url(),
+                'nonce'    => wp_create_nonce( 'wp_rest' ),
+                'stravaButtonImage' => $strava_btn_img2,
+                'inviteOnly' => (bool) get_option( 'tvs_invite_only', false ),
+                // Expose reCAPTCHA v3 site key if configured (option or constant)
+                'recaptchaSiteKey' => ( function(){
+                    $opt = get_option( 'tvs_recaptcha_site_key', '' );
+                    if ( ! empty( $opt ) ) return $opt;
+                    if ( defined( 'TVS_RECAPTCHA_SITE_KEY' ) ) return TVS_RECAPTCHA_SITE_KEY;
+                    return '';
+                } )(),
+            ] );
+        }
+        if ( file_exists( $auth_css_abs ) ) {
+            wp_enqueue_style(
+                'tvs-auth-style',
+                get_theme_file_uri( $auth_css_rel ),
+                [ 'tvs-tokens' ],
+                filemtime( $auth_css_abs )
             );
         }
     }
@@ -126,10 +193,27 @@ add_action( 'wp_enqueue_scripts', function() {
             true
         );
         // Provide REST root + nonce + login flag
+        if ( function_exists('content_url') ) {
+            $strava_btn_img3 = content_url( 'plugins/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg' );
+        } else {
+            $strava_btn_img3 = home_url( '/wp-content/plugins/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg' );
+        }
+        $strava_img_abs3 = WP_PLUGIN_DIR . '/tvs-virtual-sports/assets/img/btn_strava_connect_with_orange.svg';
+        if ( file_exists( $strava_img_abs3 ) && function_exists('add_query_arg') ) {
+            $strava_btn_img3 = add_query_arg( 'ver', filemtime( $strava_img_abs3 ), $strava_btn_img3 );
+        }
         wp_localize_script( 'tvs-favorites', 'TVS_SETTINGS', [
             'restRoot' => get_rest_url(),
             'nonce'    => wp_create_nonce( 'wp_rest' ),
             'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
+            'stravaButtonImage' => $strava_btn_img3,
+            // Keep recaptchaSiteKey in all TVS_SETTINGS localizations to avoid clobbering
+            'recaptchaSiteKey' => ( function(){
+                $opt = get_option( 'tvs_recaptcha_site_key', '' );
+                if ( ! empty( $opt ) ) return $opt;
+                if ( defined( 'TVS_RECAPTCHA_SITE_KEY' ) ) return TVS_RECAPTCHA_SITE_KEY;
+                return '';
+            } )(),
         ] );
     }
 } );
