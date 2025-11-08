@@ -5,11 +5,8 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 // Render header for block theme via template part (header.html). If unavailable, fall back to classic get_header().
-if ( function_exists( 'do_blocks' ) ) {
-  echo do_blocks( '<!-- wp:template-part {"slug":"header"} /-->' );
-} else {
-  get_header();
-}
+// Ensure full WP head pipeline runs.
+get_header();
 
 while ( have_posts() ) : the_post();
   $id   = get_the_ID();
@@ -70,8 +67,4 @@ while ( have_posts() ) : the_post();
   </main>
 <?php endwhile; 
 // Render footer via block template part (footer.html) or fallback to classic footer.
-if ( function_exists( 'do_blocks' ) ) {
-  echo do_blocks( '<!-- wp:template-part {"slug":"footer"} /-->' );
-} else {
-  get_footer();
-}
+get_footer();
