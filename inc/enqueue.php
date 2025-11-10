@@ -17,7 +17,10 @@ add_action( 'wp_enqueue_scripts', function() {
     $style_ver  = file_exists( $style_path ) ? filemtime( $style_path ) : wp_get_theme()->get( 'Version' );
     wp_enqueue_style( 'nvs-style', get_stylesheet_uri(), ['tvs-tokens'], $style_ver );
 
-    // 2) Registrer app-ressurser (JS/CSS) – lastes kun der vi trenger dem
+    // 2) App script is now handled by the plugin (tvs-virtual-sports)
+    //    Theme only enqueues it on specific pages below
+    // Removed theme-level registration to avoid conflicts with plugin version
+    /*
     $theme      = wp_get_theme();
     $app_js_rel = 'assets/tvs-app.js';
     $app_css_rel= 'assets/tvs-app.css';
@@ -52,16 +55,10 @@ add_action( 'wp_enqueue_scripts', function() {
             filemtime( $app_css_abs )
         );
     }
+    */
 
-    // Enqueue app scripts/styles on pages that rely on TVS_SETTINGS (e.g., user-profile, my-activities)
-    if ( function_exists('is_page') && ( is_page( 'user-profile' ) || is_page( 'my-activities' ) ) ) {
-        if ( wp_script_is( 'tvs-app', 'registered' ) ) {
-            wp_enqueue_script( 'tvs-app' );
-        }
-        if ( wp_style_is( 'tvs-app-style', 'registered' ) ) {
-            wp_enqueue_style( 'tvs-app-style' );
-        }
-    }
+    // Note: tvs-app is now entirely handled by the plugin
+    // Removed theme-level enqueue as these pages use tvs-block-my-activities instead
 
     // 3) Enqueue Strava assets on connect/login/register pages
     if ( is_page( 'connect-strava' ) || is_page( 'login' ) || is_page( 'register' ) || ( function_exists('is_page_template') && is_page_template('templates/page-register.html') ) ) {
