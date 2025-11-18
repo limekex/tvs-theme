@@ -88,9 +88,10 @@ add_action( 'wp_enqueue_scripts', function() {
             if ( file_exists( $strava_img_abs ) && function_exists('add_query_arg') ) {
                 $strava_btn_img = add_query_arg( 'ver', filemtime( $strava_img_abs ), $strava_btn_img );
             }
-            wp_localize_script( 'strava-connect', 'TVS_SETTINGS', [
+            wp_localize_script( 'strava-connect', 'TVS_STRAVA_SETTINGS', [
                 'restRoot' => get_rest_url(),
                 'nonce'    => wp_create_nonce( 'wp_rest' ),
+                'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
                 'stravaClientId' => $strava_client_id,
                 'siteUrl' => home_url(),
                 'stravaButtonImage' => $strava_btn_img,
@@ -141,7 +142,7 @@ add_action( 'wp_enqueue_scripts', function() {
             if ( file_exists( $strava_img_abs2 ) && function_exists('add_query_arg') ) {
                 $strava_btn_img2 = add_query_arg( 'ver', filemtime( $strava_img_abs2 ), $strava_btn_img2 );
             }
-            wp_localize_script( 'tvs-auth', 'TVS_SETTINGS', [
+            wp_localize_script( 'tvs-auth', 'TVS_AUTH_SETTINGS', [
                 'restRoot' => get_rest_url(),
                 'nonce'    => wp_create_nonce( 'wp_rest' ),
                 'stravaButtonImage' => $strava_btn_img2,
@@ -199,7 +200,7 @@ add_action( 'wp_enqueue_scripts', function() {
         if ( file_exists( $strava_img_abs3 ) && function_exists('add_query_arg') ) {
             $strava_btn_img3 = add_query_arg( 'ver', filemtime( $strava_img_abs3 ), $strava_btn_img3 );
         }
-        wp_localize_script( 'tvs-favorites', 'TVS_SETTINGS', [
+        wp_localize_script( 'tvs-favorites', 'TVS_FAVORITES_SETTINGS', [
             'restRoot' => get_rest_url(),
             'nonce'    => wp_create_nonce( 'wp_rest' ),
             'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
