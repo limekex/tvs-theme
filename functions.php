@@ -6,6 +6,210 @@ require get_template_directory() . '/inc/rest.php';
 require get_template_directory() . '/inc/blocks.php';
 require get_template_directory() . '/inc/media.php';
 
+// Add meta box for page protection settings
+add_action( 'add_meta_boxes', function() {
+    add_meta_box(
+        'tvs_page_protection',
+        'TVS Page Protection',
+        function( $post ) {
+            wp_nonce_field( 'tvs_page_protection_nonce', 'tvs_page_protection_nonce' );
+            $requires_auth = get_post_meta( $post->ID, 'tvs_requires_auth', true ) === '1';
+            $hide_from_nav = get_post_meta( $post->ID, 'tvs_hide_from_nav', true ) === '1';
+            ?>
+            <p>
+                <label>
+                    <input type="checkbox" name="tvs_requires_auth" value="1" <?php checked( $requires_auth ); ?>>
+                    <strong>Require login to view this page</strong>
+                </label>
+                <br><small>Non-logged-in users will see a login prompt instead of the page content.</small>
+            </p>
+            <p>
+                <label>
+                    <input type="checkbox" name="tvs_hide_from_nav" value="1" <?php checked( $hide_from_nav ); ?>>
+                    <strong>Hide from navigation when user is not logged in</strong>
+                </label>
+                <br><small>This page will not appear in menus/navigation for non-logged-in users.</small>
+            </p>
+            <?php
+        },
+        'page',
+        'side',
+        'high'
+    );
+} );
+
+// Save meta box data
+add_action( 'save_post_page', function( $post_id ) {
+    if ( ! isset( $_POST['tvs_page_protection_nonce'] ) || ! wp_verify_nonce( $_POST['tvs_page_protection_nonce'], 'tvs_page_protection_nonce' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+    if ( ! current_user_can( 'edit_page', $post_id ) ) {
+        return;
+    }
+    
+    // Save requires_auth
+    $requires_auth = isset( $_POST['tvs_requires_auth'] ) && $_POST['tvs_requires_auth'] === '1' ? '1' : '0';
+    update_post_meta( $post_id, 'tvs_requires_auth', $requires_auth );
+    
+    // Save hide_from_nav
+    $hide_from_nav = isset( $_POST['tvs_hide_from_nav'] ) && $_POST['tvs_hide_from_nav'] === '1' ? '1' : '0';
+    update_post_meta( $post_id, 'tvs_hide_from_nav', $hide_from_nav );
+} );
+
+// Filter navigation menu items to hide protected pages (classic menus)
+add_filter( 'wp_nav_menu_objects', function( $items ) {
+    if ( is_user_logged_in() ) {
+        return $items; // Show all items to logged-in users
+    }
+    
+    foreach ( $items as $key => $item ) {
+        if ( $item->object === 'page' && isset( $item->object_id ) ) {
+            $hide_from_nav = get_post_meta( $item->object_id, 'tvs_hide_from_nav', true ) === '1';
+            if ( $hide_from_nav ) {
+                unset( $items[ $key ] );
+            }
+        }
+    }
+    
+    return $items;
+}, 10, 1 );
+
+// Filter Navigation block items to hide protected pages (FSE/Gutenberg)
+add_filter( 'render_block', function( $block_content, $block ) {
+    // Only process Navigation blocks
+    if ( $block['blockName'] !== 'core/navigation' ) {
+        return $block_content;
+    }
+    
+    // Parse the HTML to find page links
+    if ( empty( $block_content ) || ! class_exists( 'DOMDocument' ) ) {
+        return $block_content;
+    }
+    
+    $dom = new DOMDocument();
+    @$dom->loadHTML( '<?xml encoding="UTF-8">' . $block_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+    $xpath = new DOMXPath( $dom );
+    
+    // Find all links
+    $links = $xpath->query( '//a[@href]' );
+    $nodes_to_remove = [];
+    
+    // Hide protected pages from non-logged-in users
+    if ( ! is_user_logged_in() ) {
+        foreach ( $links as $link ) {
+            $href = $link->getAttribute( 'href' );
+            
+            // Extract page ID from URL
+            $page_id = url_to_postid( $href );
+            
+            if ( $page_id ) {
+                $hide_from_nav = get_post_meta( $page_id, 'tvs_hide_from_nav', true ) === '1';
+                
+                if ( $hide_from_nav ) {
+                    // Find the parent <li> element
+                    $li = $link->parentNode;
+                    while ( $li && $li->nodeName !== 'li' ) {
+                        $li = $li->parentNode;
+                    }
+                    if ( $li ) {
+                        $nodes_to_remove[] = $li;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Remove nodes after iteration to avoid "Node no longer exists" error
+    foreach ( $nodes_to_remove as $node ) {
+        if ( $node->parentNode ) {
+            $node->parentNode->removeChild( $node );
+        }
+    }
+    
+    // Hide/show Login, Register and Logout links based on auth state
+    if ( is_user_logged_in() ) {
+        // For logged-in users: hide Login and Register links
+        $links = $xpath->query( '//a[@href]' );
+        $nodes_to_remove = [];
+        foreach ( $links as $link ) {
+            $href = $link->getAttribute( 'href' );
+            // Check if this is a login or register link - hide it
+            if ( strpos( $href, '/login/' ) !== false || strpos( $href, '/login' ) !== false ||
+                 strpos( $href, '/register/' ) !== false || strpos( $href, '/register' ) !== false ) {
+                // Find parent <li> and mark for removal
+                $parent = $link->parentNode;
+                while ( $parent && $parent->nodeName !== 'li' ) {
+                    $parent = $parent->parentNode;
+                }
+                if ( $parent && $parent->nodeName === 'li' ) {
+                    $nodes_to_remove[] = $parent;
+                }
+            }
+        }
+        // Remove collected nodes
+        foreach ( $nodes_to_remove as $node ) {
+            if ( $node->parentNode ) {
+                $node->parentNode->removeChild( $node );
+            }
+        }
+    } else {
+        // For non-logged-in users: hide Logout link
+        $links = $xpath->query( '//a[@href]' );
+        $nodes_to_remove = [];
+        foreach ( $links as $link ) {
+            $href = $link->getAttribute( 'href' );
+            // Check if this is a logout link - hide it
+            if ( strpos( $href, '/logout/' ) !== false || strpos( $href, '/logout' ) !== false ) {
+                // Find parent <li> and mark for removal
+                $parent = $link->parentNode;
+                while ( $parent && $parent->nodeName !== 'li' ) {
+                    $parent = $parent->parentNode;
+                }
+                if ( $parent && $parent->nodeName === 'li' ) {
+                    $nodes_to_remove[] = $parent;
+                }
+            }
+        }
+        // Remove collected nodes
+        foreach ( $nodes_to_remove as $node ) {
+            if ( $node->parentNode ) {
+                $node->parentNode->removeChild( $node );
+            }
+        }
+    }
+    
+    return $dom->saveHTML();
+}, 10, 2 );
+
+// Protect pages that require authentication
+add_action( 'template_redirect', function() {
+    if ( is_user_logged_in() ) {
+        return;
+    }
+    
+    if ( ! is_page() ) {
+        return;
+    }
+    
+    $page_id = get_the_ID();
+    if ( ! $page_id ) {
+        return;
+    }
+    
+    $requires_auth = get_post_meta( $page_id, 'tvs_requires_auth', true );
+    
+    if ( $requires_auth === '1' ) {
+        // Redirect to login page with return URL
+        $current_url = esc_url_raw( $_SERVER['REQUEST_URI'] ?? '/' );
+        $login_url = home_url( '/login/?redirect=' . urlencode( $current_url ) );
+        wp_safe_redirect( $login_url );
+        exit;
+    }
+}, 5 );
+
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'wp-block-styles' );
     add_theme_support( 'align-wide' );
@@ -16,6 +220,7 @@ add_action( 'after_setup_theme', function() {
     add_theme_support( 'post-thumbnails' );
     // Other supports can be added as needed
 } );
+
 
 // Ensure key pages exist in development
 add_action( 'init', function() {
@@ -74,6 +279,7 @@ add_action( 'template_redirect', function() {
         wp_safe_redirect( home_url( '/user-profile/' ) );
         exit;
     }
+    
     if ( $path === 'connect-strava' ) {
         // Only allow when handling OAuth or popup handshake
         $has_code = isset($_GET['code']) && is_string($_GET['code']) && $_GET['code'] !== '';

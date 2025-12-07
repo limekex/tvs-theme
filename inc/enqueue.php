@@ -118,6 +118,27 @@ add_action( 'wp_enqueue_scripts', function() {
         }
     }
 
+    // 3c) Logout page script
+    if ( function_exists('is_page') && is_page('logout') ) {
+        $logout_js_rel = 'assets/logout.js';
+        $logout_js_abs = get_template_directory() . '/' . $logout_js_rel;
+        if ( file_exists( $logout_js_abs ) ) {
+            wp_enqueue_script(
+                'tvs-logout',
+                get_theme_file_uri( $logout_js_rel ),
+                [],
+                filemtime( $logout_js_abs ),
+                true
+            );
+            // Localize TVS_SETTINGS for the logout script
+            wp_localize_script( 'tvs-logout', 'TVS_SETTINGS', [
+                'restRoot' => get_rest_url(),
+                'nonce'    => wp_create_nonce( 'wp_rest' ),
+                'user'     => is_user_logged_in() ? wp_get_current_user()->user_login : null,
+            ] );
+        }
+    }
+
     // 3b) Auth UI helpers (register page behaviors)
     if ( function_exists('is_page') && ( is_page('register') || is_page('login') ) ) {
         $auth_js_rel = 'assets/auth.js';

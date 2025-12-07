@@ -38,11 +38,22 @@ Tags: full-site-editing, one-column, accessibility-ready
 	text-decoration: none;
 }
 
-.tvs-nav .wp-block-navigation__container > .wp-block-navigation-item > a {
+/* Navigation main container spacing */
+.tvs-nav .wp-block-navigation__container {
+	gap: var(--tvs-space-2); /* Add spacing between nav items */
+}
+
+/* Main navigation items - compact height */
+.tvs-nav .wp-block-navigation__container > .wp-block-navigation-item > a,
+.tvs-nav .wp-block-navigation__container > .wp-block-navigation-item > button {
 	color: var(--tvs-color-text-primary);
-	padding: var(--tvs-space-2) var(--tvs-space-3);
+	padding: 0.375rem 0.875rem; /* Even smaller for compact look */
 	border-radius: var(--tvs-radius-sm);
 	transition: var(--tvs-transition-colors), var(--tvs-transition-shadow);
+	display: inline-flex;
+	align-items: center; /* Vertically center text and icon */
+	gap: 0.375rem; /* Tight space between text and icon */
+	line-height: 1.5; /* Control line height */
 }
 
 .tvs-nav .wp-block-navigation__container > .wp-block-navigation-item > a:hover,
@@ -53,18 +64,52 @@ Tags: full-site-editing, one-column, accessibility-ready
 
 /* Navigation: submenu levels (desktop) */
 .tvs-header .wp-block-navigation__submenu-container {
-	background: var(--tvs-color-bg-secondary); /* sub (level 1) */
-	border: 1px solid var(--tvs-color-border-subtle);
+	background: #18181b !important; /* Very dark, almost black background */
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: var(--tvs-radius-md);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6); /* Strong shadow */
+	padding: 0.5rem 0;
+	min-width: 220px;
+	margin-top: 0; /* Remove gap - creates a bridge for hover */
+	padding-top: 0.75rem; /* Add internal padding instead */
+}
+
+/* Create invisible bridge between menu item and submenu */
+.tvs-header .wp-block-navigation-item.has-child:hover > .wp-block-navigation__submenu-container,
+.tvs-header .wp-block-navigation-item.has-child:focus-within > .wp-block-navigation__submenu-container {
+	display: block;
+}
+
+/* Keep submenu open when hovering over parent or submenu */
+.tvs-header .wp-block-navigation-item.has-child {
+	position: relative;
+}
+
+.tvs-header .wp-block-navigation-item.has-child > a,
+.tvs-header .wp-block-navigation-item.has-child > button {
+	padding-bottom: 0.625rem; /* Extra bottom padding to bridge gap */
 }
 
 .tvs-header .wp-block-navigation__submenu-container .wp-block-navigation__submenu-container {
-	background: var(--tvs-color-bg-tertiary); /* sub-child (level 2+) */
+	background: rgba(20, 20, 24, 0.95); /* Even darker for nested submenus */
+	margin-top: 0;
+	margin-left: var(--tvs-space-1);
+}
+
+/* Submenu items */
+.tvs-header .wp-block-navigation__submenu-container .wp-block-navigation-item {
+	margin: 0;
 }
 
 .tvs-header .wp-block-navigation__submenu-container a,
 .tvs-header .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-	color: var(--tvs-color-text-primary);
-	padding: var(--tvs-space-2) var(--tvs-space-4);
+	color: rgba(255, 255, 255, 0.9); /* Lighter text for dark background */
+	padding: 0.625rem 1.25rem; /* Balanced padding */
+	display: flex;
+	align-items: center; /* Center text vertically */
+	transition: var(--tvs-transition-colors);
+	font-size: 0.9375rem;
+	min-height: 2.5rem; /* Consistent height */
 }
 
 .tvs-header .wp-block-navigation__submenu-container a:hover,
@@ -73,9 +118,41 @@ Tags: full-site-editing, one-column, accessibility-ready
 	color: var(--tvs-color-primary);
 }
 
-/* Caret / submenu icon */
+/* Submenu icon (dropdown arrow) - properly aligned */
 .tvs-header .wp-block-navigation__submenu-icon {
-	color: var(--tvs-color-text-secondary);
+	color: var(--tvs-color-text-secondary) !important;
+	width: 10px !important;
+	height: 10px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	transition: transform 0.2s ease, color 0.2s ease;
+	flex-shrink: 0;
+	display: inline-block !important;
+	opacity: 1 !important;
+	visibility: visible !important;
+}
+
+/* Fix WordPress SVG alignment */
+.tvs-header .wp-block-navigation__submenu-icon svg {
+	display: block !important;
+	width: 100% !important;
+	height: 100% !important;
+	vertical-align: middle;
+	fill: currentColor;
+}
+
+/* Rotate arrow when submenu is open (if WordPress adds .is-open class) */
+.tvs-header .wp-block-navigation-item.has-child:hover .wp-block-navigation__submenu-icon,
+.tvs-header .wp-block-navigation-item.has-child:focus-within .wp-block-navigation__submenu-icon {
+	color: var(--tvs-color-primary);
+	transform: rotate(180deg);
+}
+
+/* Better hover state for parent items with submenus */
+.tvs-header .has-child > a:hover,
+.tvs-header .has-child > .wp-block-navigation-item__content:hover {
+	background: var(--tvs-color-glass-light);
+	color: var(--tvs-color-primary);
 }
 
 /* Footer */
@@ -228,7 +305,6 @@ main {
 	color: var(--tvs-color-text-primary);
 	/* Larger touch targets on mobile menu */
 	padding: var(--tvs-space-4) var(--tvs-space-5);
-	min-height: 44px;
 	display: block;
 }
 
@@ -299,4 +375,104 @@ main {
 	color: var(--tvs-color-text-secondary);
 	font-size: var(--tvs-text-sm);
 	margin: 0;
+}
+
+/* Auth Required CTA */
+.tvs-auth-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 60vh;
+	padding: var(--tvs-space-8) var(--tvs-space-4);
+}
+
+.tvs-auth-required-page .tvs-main {
+	padding-top: var(--tvs-space-8);
+	padding-bottom: var(--tvs-space-8);
+}
+
+.tvs-auth-card {
+	background: var(--tvs-color-bg-secondary);
+	border: 1px solid var(--tvs-color-border-subtle);
+	border-radius: var(--tvs-radius-lg);
+	padding: var(--tvs-space-8) var(--tvs-space-6);
+	max-width: 600px;
+	width: 100%;
+	text-align: center;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.tvs-auth-card h1 {
+	font-size: var(--tvs-text-3xl);
+	color: var(--tvs-color-text-primary);
+	margin: 0 0 var(--tvs-space-4);
+}
+
+.tvs-auth-card p {
+	font-size: var(--tvs-text-lg);
+	color: var(--tvs-color-text-secondary);
+	line-height: 1.6;
+	margin: 0 0 var(--tvs-space-6);
+}
+
+.tvs-auth-buttons {
+	display: flex;
+	gap: var(--tvs-space-4);
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.tvs-btn {
+	display: inline-block;
+	padding: var(--tvs-space-3) var(--tvs-space-5);
+	font-size: var(--tvs-text-base);
+	font-weight: 500;
+	text-decoration: none;
+	border-radius: var(--tvs-radius-md);
+	transition: all 0.2s ease;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+.tvs-btn-primary {
+	background: var(--tvs-color-primary);
+	color: white;
+}
+
+.tvs-btn-primary:hover {
+	background: var(--tvs-color-primary-hover, #2563eb);
+	transform: translateY(-1px);
+}
+
+.tvs-btn-outline {
+	background: transparent;
+	border-color: var(--tvs-color-border);
+	color: var(--tvs-color-text-primary);
+}
+
+.tvs-btn-outline:hover {
+	background: var(--tvs-color-glass-light);
+	border-color: var(--tvs-color-primary);
+}
+
+@media (max-width: 640px) {
+	.tvs-auth-card {
+		padding: var(--tvs-space-6) var(--tvs-space-4);
+	}
+	
+	.tvs-auth-card h1 {
+		font-size: var(--tvs-text-2xl);
+	}
+	
+	.tvs-auth-card p {
+		font-size: var(--tvs-text-base);
+	}
+	
+	.tvs-auth-buttons {
+		flex-direction: column;
+	}
+	
+	.tvs-btn {
+		width: 100%;
+	}
 }

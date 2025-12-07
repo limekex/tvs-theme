@@ -74,7 +74,7 @@
         try {
           const r = await fetch(rest + 'tvs/v1/auth/strava', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code: pendingCode, check_only: true })
           });
           const body = await r.json().catch(()=>null);
@@ -109,7 +109,7 @@
         try {
           const r = await fetch(rest + 'tvs/v1/auth/strava', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code: pendingCode })
           });
           const body = await r.json().catch(()=>null);
@@ -400,7 +400,10 @@
           return;
         }
         showAlert(statusEl, 'Account created! Signing you in…', 'success');
-        setTimeout(()=>{ location.href = '/user-profile/'; }, 400);
+        // Check for redirect parameter (from protected pages)
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect') || '/user-profile/';
+        setTimeout(()=>{ location.href = redirect; }, 400);
       } catch (err) {
         console.error('Register failed', err);
         showAlert(statusEl, 'Could not create account: ' + (err?.message || 'Unknown error'), 'error');
@@ -426,7 +429,7 @@
           try {
             const r = await fetch(rest + 'tvs/v1/auth/strava', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ code: pendingCode, check_only: true })
             });
             const body = await r.json().catch(()=>null);
@@ -482,7 +485,7 @@
         const recaptcha = await getRecaptchaToken('strava_register');
         const r = await fetch(rest + 'tvs/v1/auth/strava', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code: pendingCode, email, accept_terms: true, newsletter: news, invite_code: invite || undefined, recaptcha_token: recaptcha || undefined })
         });
         const body = await r.json().catch(()=>null);
@@ -492,7 +495,11 @@
           throw new Error(body && (body.message || body.code) || ('HTTP ' + r.status));
         }
         showAlert(statusEl, 'All set! Signing you in…', 'success');
-        setTimeout(()=>{ location.href = '/user-profile/?strava=ok'; }, 400);
+        // Check for redirect parameter (from protected pages)
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect') || '/user-profile/';
+        const redirectUrl = redirect.includes('?') ? redirect + '&strava=ok' : redirect + '?strava=ok';
+        setTimeout(()=>{ location.href = redirectUrl; }, 400);
       } catch (err) {
         console.error('Strava register failed', err);
         showAlert(statusEl, 'Could not complete: ' + (err?.message || 'Unknown error'), 'error');
@@ -516,13 +523,16 @@
       try {
         const r = await fetch(rest + 'tvs/v1/auth/login', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
         });
         const body = await r.json().catch(()=>null);
         if (!r.ok) throw new Error(body && (body.message || body.code) || ('HTTP ' + r.status));
         showAlert(statusEl, 'Signed in! Redirecting…', 'success');
-        setTimeout(()=>{ location.href = '/user-profile/'; }, 300);
+        // Check for redirect parameter (from protected pages)
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect') || '/user-profile/';
+        setTimeout(()=>{ location.href = redirect; }, 300);
       } catch (err) {
         console.error('Login failed', err);
         showAlert(statusEl, 'Incorrect username or password.', 'error');

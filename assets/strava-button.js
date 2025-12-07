@@ -1,10 +1,10 @@
-// Build dynamic "Connect with Strava" button from TVS_SETTINGS
+// Build dynamic "Connect with Strava" button from TVS_STRAVA_SETTINGS
 (function() {
   const btnContainer = document.getElementById('strava-connect-btn');
-  if (!btnContainer || typeof TVS_SETTINGS === 'undefined') return;
+  if (!btnContainer || typeof TVS_STRAVA_SETTINGS === 'undefined') return;
 
-  const clientId = TVS_SETTINGS.stravaClientId;
-  const redirectUri = `${TVS_SETTINGS.siteUrl}/connect-strava/?mode=popup`;
+  const clientId = TVS_STRAVA_SETTINGS.stravaClientId;
+  const redirectUri = `${TVS_STRAVA_SETTINGS.siteUrl}/connect-strava/?mode=popup`;
 
   if (!clientId) {
     btnContainer.innerHTML = '<p style="color:#c00;">Missing Strava Client ID. Configure it in WordPress Admin under TVS → Strava.</p>';
@@ -28,7 +28,7 @@
     a.href = url;
     a.className = 'tvs-strava-img-btn';
     a.setAttribute('aria-label', label);
-    const imgUrl = (TVS_SETTINGS && TVS_SETTINGS.stravaButtonImage) ? String(TVS_SETTINGS.stravaButtonImage) : '';
+    const imgUrl = (TVS_STRAVA_SETTINGS && TVS_STRAVA_SETTINGS.stravaButtonImage) ? String(TVS_STRAVA_SETTINGS.stravaButtonImage) : '';
     if (imgUrl) {
       const img = document.createElement('img');
       img.src = imgUrl;
@@ -41,7 +41,7 @@
     } else {
       // Fallback text if image URL is missing
       a.textContent = label;
-      try { console.warn('TVS: Missing TVS_SETTINGS.stravaButtonImage; rendering text fallback.'); } catch(e) {}
+      try { console.warn('TVS: Missing TVS_STRAVA_SETTINGS.stravaButtonImage; rendering text fallback.'); } catch(e) {}
     }
     a.addEventListener('click', (e) => {
       e.preventDefault();
@@ -51,8 +51,8 @@
   }
 
   // Check connection status to adjust button text
-  fetch(`${TVS_SETTINGS.restRoot}tvs/v1/strava/status`, {
-    headers: { 'X-WP-Nonce': TVS_SETTINGS.nonce }
+  fetch(`${TVS_STRAVA_SETTINGS.restRoot}tvs/v1/strava/status`, {
+    headers: { 'X-WP-Nonce': TVS_STRAVA_SETTINGS.nonce }
   })
     .then(r => r.json())
     .then(data => {
