@@ -140,6 +140,9 @@ while ( $q->have_posts() ) {
 	$title = get_the_title();
 	$link  = get_permalink();
 	$img   = get_the_post_thumbnail_url( $id, 'large' );
+	if ( ! $img ) {
+		$img = home_url( '/wp-content/uploads/2025/10/ActivityDymmy2-300x200.jpg' );
+	}
 
 	// Meta with fallbacks to both legacy _tvs_* and new names
 	$dist  = get_post_meta( $id, 'distance_m', true );
