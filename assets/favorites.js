@@ -6,9 +6,24 @@
     e.stopPropagation();
     const routeId = btn.getAttribute('data-route');
     if(!routeId){ return; }
-    if(!window.TVS_SETTINGS || !window.TVS_SETTINGS.restRoot){ window.TVS_SETTINGS = window.TVS_SETTINGS || {}; TVS_SETTINGS.restRoot = '/wp-json/'; }
-    const rest = TVS_SETTINGS.restRoot.replace(/\/$/, '');
-    const nonce = TVS_SETTINGS.nonce || '';
+    
+    // Try TVS_FAVORITES_SETTINGS first, then fallback to TVS_SETTINGS
+    const settings = window.TVS_FAVORITES_SETTINGS || window.TVS_SETTINGS || {};
+    if (!settings.restRoot) {
+      settings.restRoot = '/wp-json/';
+    }
+    const rest = settings.restRoot.replace(/\/$/, '');
+    const nonce = settings.nonce || '';
+
+    // Debug logging
+    console.log('[TVS] Favorites debug:', {
+      hasNonce: !!nonce,
+      nonceLength: nonce.length,
+      noncePreview: nonce ? nonce.substring(0, 4) + '...' : 'NONE',
+      restRoot: rest,
+      isLoggedIn: settings.user || null,
+      settingsSource: window.TVS_FAVORITES_SETTINGS ? 'TVS_FAVORITES_SETTINGS' : (window.TVS_SETTINGS ? 'TVS_SETTINGS' : 'none')
+    });
 
     // optimistic toggle
     const active = btn.classList.contains('is-active');

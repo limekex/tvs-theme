@@ -175,8 +175,8 @@
 /* Active state */
 .tvs-bookmark-btn.is-active{ background: var(--tvs-color-primary); color: #fff; border-color: var(--tvs-color-primary); }
 
-/* Grid-only tweaks */
-.tvs-routes-grid .tvs-route-card {
+/* Grid-only tweaks - Apply aspect-ratio ONLY to routes-grid, NOT favourites */
+.tvs-routes-grid:not(.tvs-favourites-grid) .tvs-route-card {
 	aspect-ratio: 16/9;
 }
 
